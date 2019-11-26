@@ -1,0 +1,1063 @@
+var canvas;
+var context;
+var canvasWidth = 920;
+var canvasHeight = 460;
+var Role_canvasWidth = 256; 
+var Role_canvasHeight = 256; 
+var canvas_result; 
+var context_result; 
+var canvas_add; 
+var context_add; 
+var canvas_clip; 
+var context_clip; 
+
+var Something_change = false; //Between the pattern change, drawing is changed
+var Detect_change = false;  //Detect has change 
+var Display_result = false; 
+
+var User_steps = 0; 
+var Have_generation = true; 
+
+//画笔线条和颜色定义
+
+var color_mountain = '#c3ae95';
+var color_grass = '#88c23f';
+var color_tree = '#078d83';
+var color_house = '#b387b3';
+var color_sky = '#6cc0ff';
+var color_river = '#649eeb';
+var color_road = '#c6c61d';
+var color_stone = '#c5d8c5';
+
+//撤销的array
+var cancelList = new Array();
+//撤销的次数
+var cancelIndex = 0;
+
+//初始模式在场景
+var pattern = "Scene";  // Scene or Role or Draw
+
+//初始化场景参数
+Scene = new Object();
+Scene.way = "draw";   
+Scene.grah = "mountain";
+Scene.tool = "size";
+Scene.pen_size = 50;
+Scene.eraser_size = 50;
+Scene.max_size = 100; 
+Scene.min_size = 0; 
+Scene.eraser_max_size = 50; 
+Scene.eraser_min_size = 10; 
+Scene.upload_type = ''; 
+
+//初始化角色参数
+var total_create = 0; 
+Role = new Object(); 
+Role.grah = "cat"; 
+Role.tool = "Role_size"; 
+Role.pen_size = 1; 
+Role.eraser_size = 5; 
+Role.max_size = 5; 
+Role.min_size = 1; 
+Role.eraser_max_size = 20; 
+Role.eraser_min_size = 5; 
+
+Add = new Object(); 
+Add.tool = 'Add_size'; 
+Add.pen_size = 1; 
+Add.eraser_size = 5; 
+Add.max_size = 10; 
+Add.min_size = 1; 
+Add.eraser_max_size = 10; 
+Add.eraser_min_size = 5; 
+Add.color = '#FFCC00'; 
+var Add_cancelList = new Array(); 
+var AddcancelIndex = 0; 
+
+//定义角色列表
+var Role_List = new Array();
+var current_Role = "";  
+var Layer_orders = new Array(); //图层列表顺序，越前面越底层； 
+
+//adjust size of result
+var Edit_result_Role="";
+
+var drawing_page = 1; 
+var pdf_data=new Array(); 
+
+$(function(){
+	initCanvas();
+	draw_graph('grass', this);
+	/*
+	$(".mountain").click(function(){
+		draw_graph('mountain', this);
+	});
+	$(".grass").click(function(){
+		draw_graph('grass', this);
+	});
+	$(".tree").click(function(){
+		draw_graph('tree', this);
+	});
+	$(".house").click(function(){
+		draw_graph('house', this);
+	});
+	$(".sky").click(function(){
+		draw_graph('sky', this);
+	});
+	$(".river").click(function(){
+		draw_graph('river', this);
+	});
+	$(".road").click(function(){
+		draw_graph('road', this);
+	});
+	$(".stone").click(function(){
+		draw_graph('stone', this);
+	}); */
+	$(".iconhuiche").click(function(){
+		last(this);
+	});
+	$(".iconqianjin").click(function(){
+		next(this);
+	});
+	$(".save").click(function(){
+		//Save_to_Local();  
+	});
+	$(".generate-jpg").click(function(){
+		Add_to_Book(); 
+	});
+	$(".generate-picbook").click(function(){
+		generate_pdf(); 
+	}); 
+
+	$(".clear-this-floor-object").click(function(){
+		clearContext();
+	});
+	$("#Create_Role").click(function(){
+		Create_Role(Role.grah,false,""); 
+	}); 
+	$(".cat").click(function(){
+		draw_graph('cat',this); 
+	}); 
+	$(".bird").click(function(){
+		draw_graph('bird',this); 
+	}); 
+	$(".plant").click(function(){
+		draw_graph('plant',this); 
+	});
+    
+        //初始化
+
+	//角色素材不轮播
+	$("#role_carousel").carousel('pause');
+
+	//素材库可拖动
+	$('.easyui-draggable').draggable({
+		containment: 'body', 
+		appendTo: 'body',
+		opacity: 0.7, helper: "clone",
+		stop: function(e){
+			var cond_x = e.pageX-$("canvas").offset().left; 
+			var cond_y = e.pageY-$("canvas").offset().top; 
+			if (cond_x>0 && cond_x<1024 && cond_y>0 && cond_y<512)
+			{
+				console.log("Yes,its in"); 
+				Create_Role(Role.grah,true,$(this)[0].src); 
+			}
+		}
+    });
+
+});
+
+var initCanvas = function () {
+	pattern='Scene'
+	canvas = document.getElementById("canvas");
+	console.log("initCanvas",canvas)
+	canvas.width = canvasWidth;
+	canvas.height = canvasHeight;
+	context = canvas.getContext('2d');
+	context.lineCap = "round";
+	context.lineJoin = "round";
+	clearContext(); 
+	Layer_orders.push("bg"); 
+	
+	canvas_result = document.getElementById("canvas_result"); 
+	canvas_result.width = canvasWidth; 
+	canvas_result.height = canvasHeight; 
+	context_result = canvas_result.getContext('2d'); 
+
+	canvas_clip = document.getElementById("canvas_clip"); 
+	canvas_clip.width = canvasWidth; 
+	canvas_clip.height = canvasHeight; 
+	context_clip = canvas_clip.getContext('2d'); 
+
+	
+	/*
+	canvas_add = document.getElementById("canvas_add"); 
+	canvas_add.width = canvasWidth; 
+	canvas_add.height = canvasHeight; 
+	context_add = canvas_add.getContext('2d'); 
+
+	
+	
+	
+    //设置读取图片
+    var file = document.getElementById("file"); 
+    file.onchange = function(){
+    	var f = this.files[0]; 
+    	var reader = new FileReader(); 
+    	reader.readAsDataURL(f); 
+    	reader.onload = function(){
+    		var image = new Image();
+			image.src = reader.result; 
+			image.onload = function(){
+				//clearContext(); 
+				context.clearRect(0,0,canvasWidth,canvasHeight);
+				context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+				cancelIndex = 0;
+				var dataUrl =  canvas.toDataURL();
+				cancelList.push(dataUrl);
+				update_RightMenu(-1); 
+				Scene.upload_type = 'Picture'
+				Something_change = true; 
+				Detect_change = true; 
+			};
+    	}; 
+    };
+
+    var file_tmp = document.getElementById("file_tmp"); 
+    file_tmp.onchange = function(){
+    	var f = this.files[0]; 
+    	var reader = new FileReader(); 
+    	reader.readAsDataURL(f); 
+    	reader.onload = function(){
+    		var image = new Image();
+			image.src = reader.result; 
+			image.onload = function(){
+				//clearContext(); 
+				context.clearRect(0,0,canvasWidth,canvasHeight);
+				context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+				cancelIndex = 0;
+				var dataUrl =  canvas.toDataURL();
+				cancelList.push(dataUrl);
+				update_RightMenu(-1); 
+				Scene.upload_type='Label'
+				Something_change = true; 
+				Detect_change = true; 
+			};
+    	}; 
+    }; */
+}
+
+
+var draw_graph = function(graphType, obj){
+	
+	$('#'+Scene.grah+"_pic").css('color','#7D8C8F')
+	$('#'+Scene.grah+"_pic a").css('color','#7D8C8F')
+	Scene.grah = graphType; 
+	$('#'+Scene.grah+"_pic").css('color','#0AC0C5')
+	$('#'+Scene.grah+"_pic a").css('color','#0AC0C5')
+	console.log("do draw_graph!",Scene.grah)
+	var Edit_canvas; 			//判断当前编辑的canvas
+	var Edit_context; 
+	var canvas_Type="none";  
+	var position=-1; 
+	if (graphType =='cat' || graphType == 'bird' || graphType == 'plant') {	
+		if (Role_List.length>0) 
+		{
+			for (i=0; i<Role_List.length; i++)
+			{
+				if(Role_List[i].canvas_name == current_Role)
+				{
+					Edit_canvas = Role_List[i].Role_canvas; 
+					Edit_context = Role_List[i].Role_context; 
+					position = i; 
+					break; 
+				}
+			}
+
+			canvas_Type="Role"
+		}
+	}else if (pattern=='Scene'){
+		Edit_canvas = canvas; 
+		Edit_context = context; 
+		Edit_context.lineCap = "round";
+		Edit_context.lineJoin = "round";
+		canvas_Type = "Scene"; 
+	} else if (pattern=='Add'){
+		Edit_canvas = canvas_add; 
+		Edit_context = context_add; 
+		Edit_context.lineCap = "round";
+		Edit_context.lineJoin = "round";
+		canvas_Type = "Add"; 
+	}
+
+	var canDraw = false;	
+	
+	var startX;
+	var startY;
+
+
+	
+	//橡皮擦擦除功能
+	var mouseclick = function(e){
+		if((canvas_Type == "Scene" && Scene.tool=="eraser")||(canvas_Type == "Role" && Role.tool=="Role_eraser")||(canvas_Type=='Add' && Add.tool=='Add_eraser'))
+		{
+			scroolTop = $(window).scrollTop();
+			scroolLeft = $(window).scrollLeft();
+			canvasTop = $(Edit_canvas).offset().top - scroolTop;
+			canvasLeft = $(Edit_canvas).offset().left - scroolLeft;
+			e=e||window.event;
+			var x = e.clientX - canvasLeft;
+			var y = e.clientY - canvasTop;	
+		    var x1,x2,y1,y2; 
+		    if (canvas_Type == "Scene")
+		    {
+		    	x1 = Math.max(0,x-Scene.eraser_size); 
+		  		y1 = Math.max(0,y-Scene.eraser_size); 
+		    	x2 = Math.min(x+Scene.eraser_size,canvasWidth); 
+		    	y2 = Math.min(y+Scene.eraser_size,canvasHeight); 
+		    } else if (canvas_Type == "Role")
+		    {
+		    	x1 = Math.max(0,x-Role.eraser_size); 
+		  		y1 = Math.max(0,y-Role.eraser_size); 
+		    	x2 = Math.min(x+Role.eraser_size,Role_canvasWidth); 
+		    	y2 = Math.min(y+Role.eraser_size,Role_canvasHeight); 
+		    }else if (canvas_Type=='Add')
+		    {
+		    	x1 = Math.max(0,x-Add.eraser_size); 
+		  		y1 = Math.max(0,y-Add.eraser_size); 
+		    	x2 = Math.min(x+Add.eraser_size,canvasWidth); 
+		    	y2 = Math.min(y+Add.eraser_size,canvasHeight); 
+		    }
+		    if(pattern==canvas_Type) Edit_context.clearRect(x1,y1,x2-x1,y2-y1); 
+		    saveImageToAry();
+		}
+	}; 
+
+
+	var mousedown = function(e){
+		console.log("Scene size mousedown!")
+		console.log("http://painting.nhcilab.com/static/js/touch.type",e.type)
+		if (canvas_Type=="Scene")// && Scene.tool=="size")
+		{
+			scrollTop = $(window).scrollTop();
+			scrollLeft = $(window).scrollLeft();
+			canvasTop = $(Edit_canvas).offset().top - scrollTop;
+			canvasLeft = $(Edit_canvas).offset().left - scrollLeft;
+			Edit_context.lineWidth = Scene.pen_size; 
+			//alert(e.type); 
+			var Touch = false; 
+			if (e.type=='touchstart')
+			{
+				console.log('touch',e.type);
+				e = e.touches[0];
+				Touch = true; 		 
+			}
+			console.log('e',e.clientX)
+			startX = e.clientX - canvasLeft;	
+			startY = e.clientY - canvasTop;
+			Edit_context.moveTo(startX, startY);
+			if (pattern=="Scene") canDraw = true;
+ 			console.log()
+			if (Scene.tool=="eraser"){
+				Edit_context.lineWidth = Scene.eraser_size; 
+				Edit_context.strokeStyle = '#FFF';
+				Edit_context.beginPath();
+			}else if (graphType == 'mountain') {
+				Edit_context.strokeStyle = color_mountain;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'grass'){
+				Edit_context.strokeStyle = color_grass;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'tree'){
+				Edit_context.strokeStyle = color_tree;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'house'){
+				Edit_context.strokeStyle = color_house;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'sky'){
+				Edit_context.strokeStyle = color_sky;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'river'){
+				Edit_context.strokeStyle = color_river;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'road'){
+				Edit_context.strokeStyle = color_road;
+				Edit_context.beginPath();
+			}
+			else if(graphType == 'stone'){
+				Edit_context.strokeStyle = color_stone;
+				Edit_context.beginPath();
+			}
+			// 阻止点击时的cursor的变化，draw
+			if (Touch==false)
+			{
+				e=e||window.event;
+				e.preventDefault();
+			}
+		}
+		else if (canvas_Type=="Role" && Role.tool=="Role_size"){
+
+			scrollTop = $(window).scrollTop();
+			scrollLeft = $(window).scrollLeft();
+			canvasTop = $(Edit_canvas).offset().top - scrollTop;
+			canvasLeft = $(Edit_canvas).offset().left  - scrollLeft;
+ 
+			if (Role.tool=="Role_size")
+			{
+				Edit_context.strokeStyle = '#000';
+				Edit_context.lineWidth = Role.pen_size;
+			} else if (Role.tool=="Role_eraser"){
+				Edit_context.strokeStyle = '#FFF';
+				Edit_context.lineWidth = Role.eraser_size;
+			} 
+
+			startX = e.clientX - canvasLeft;	
+			startY = e.clientY - canvasTop;
+
+			Edit_context.moveTo(startX, startY);
+			
+			if (pattern=="Role") canDraw = true;
+
+   			
+			Edit_context.beginPath();
+			// 阻止点击时的cursor的变化，draw
+			e=e||window.event;
+			e.preventDefault();
+		}else  if (canvas_Type=="Add" && Add.tool=="Add_size")
+		{
+			scrollTop = $(window).scrollTop();
+			scrollLeft = $(window).scrollLeft();
+			canvasTop = $(Edit_canvas).offset().top - scrollTop;
+			canvasLeft = $(Edit_canvas).offset().left  - scrollLeft;
+ 
+			if (Add.tool=="Add_size")
+			{
+				Edit_context.strokeStyle = Add.color;
+				Edit_context.lineWidth = Add.pen_size;
+			} else if (Add.tool=="Role_eraser"){
+				Edit_context.strokeStyle = Add.color;
+				Edit_context.lineWidth = Add.eraser_size;
+			} 
+
+			startX = e.clientX - canvasLeft;	
+			startY = e.clientY - canvasTop;
+
+			Edit_context.moveTo(startX, startY);
+			
+			if (pattern=="Add") canDraw = true;
+
+   			
+			Edit_context.beginPath();
+			// 阻止点击时的cursor的变化，draw
+			e=e||window.event;
+			e.preventDefault();
+
+		}	
+	};
+
+
+	//鼠标离开 把蒙版canvas的图片生成到canvas中
+	var mouseup = function(e){
+		if ((canvas_Type=='Scene')||(canvas_Type=='Role' && Role.tool=='Role_size')||(canvas_Type=='Add' && Add.tool=='Add_size'))
+		{
+			if (e.type=='touchmove')
+			{
+				e=e.touches[0]; 
+			}else
+			{ 
+				e=e||window.event;
+			}
+			console.log("touchup"); 
+			if(canDraw){
+				canDraw = false;
+				var image = new Image();
+				saveImageToAry();
+			}
+		}	
+	};
+
+
+	// 鼠标移动
+	var  mousemove = function(e){
+		//console.log("mousemove")
+	    if (canvas_Type!="none")
+	    {
+			scroolTop = $(window).scrollTop();
+			scroolLeft = $(window).scrollLeft();
+			canvasTop = $(Edit_canvas).offset().top - scroolTop;
+			canvasLeft = $(Edit_canvas).offset().left - scroolLeft;
+			if (e.type=='touchmove')
+			{
+				e=e.touches[0]; 
+			}else 
+			{
+				e=e||window.event;
+			}
+			var x = e.clientX - canvasLeft;
+			//console.log('touchmove',x); 
+			var y = e.clientY - canvasTop;	
+			if(canDraw){
+					Edit_context.lineTo(x ,y);
+					//print("Move to (x,y):   ",x,"  ",y); 
+					Edit_context.stroke(); 						
+			}
+		}
+	};
+
+    //保存历史 用于撤销
+	var saveImageToAry = function (){
+		console.log(canvas_Type)
+		if (canvas_Type == 'Scene')
+		{
+			cancelIndex = 0;
+			var dataUrl =  Edit_canvas.toDataURL();
+			cancelList.push(dataUrl);
+                        var step_name; 
+			console.log('http://painting.nhcilab.com/static/js/Scene.tool',Scene.tool); 
+			if (Scene.tool=="eraser") 
+			{
+				  step_name = 'erase';   
+			}else  
+			{
+				step_name = 'draw'
+			}
+			console.log('http://painting.nhcilab.com/static/js/step.name',step_name); 
+			add_user_file(step_name,dataUrl)
+			update_RightMenu(-1); 
+		} else if (canvas_Type == 'Role') 
+		{
+			Role_List[position].cancelIndex = 0; 
+			var dataUrl = Edit_canvas.toDataURL(); 
+			Role_List[position].cancelList.push(dataUrl); 
+			update_RightMenu(position); 
+		}else if (canvas_Type == 'Add')
+		{
+			Add_cancelIndex = 0;
+			var dataUrl =  Edit_canvas.toDataURL();
+			Add_cancelList.push(dataUrl);
+			update_RightMenu(-2);
+		}
+		update_RightMenu(); 	
+		Something_change = true
+		Detect_change = true; 
+	}
+	console.log("bind  here",'mousedown')
+	$(Edit_canvas).unbind();
+	$(Edit_canvas).bind('mousedown',mousedown);
+	$(Edit_canvas).bind('mousemove',mousemove);
+	$(Edit_canvas).bind('mouseup',mouseup);
+	$(Edit_canvas).bind('mouseout',mouseup);
+
+	
+	
+	
+	
+	$(Edit_canvas).bind('touchstart',function(e){
+		//alert("dfdfd"); 
+		mousedown(e); 
+		e.preventDefault();
+	});
+	$(Edit_canvas).bind('touchmove',function(e){
+		mousemove(e);
+		// e.preventDefault();
+	});
+	$(Edit_canvas).bind('touchend',function(e){
+		mouseup(e);
+	});
+	$(Edit_canvas).bind('touchcancel',function(e){
+		mouseup(e); 
+	});
+	//$(Edit_canvas).bind('click',mouseclick);
+	
+}
+
+//判断当前是哪个canvas，背景返回-1，Role返回RoleList的下标
+var Find_Canvas = function(){
+	if (pattern == 'Scene') return -1; 
+	else if (pattern == 'Role'){
+		for (i = 0;  i<Role_List.length; i++)
+			if (Role_List[i].canvas_name == current_Role) return i; 
+	} else if (pattern=='Add') return -2; 
+
+}
+
+//上一步
+var last = function(){
+	var label = Find_Canvas(); 
+	//console.log("label",label); 
+	//console.log("cancelIndex",Add_cancelIndex); 
+	if (label==-1 && cancelIndex<cancelList.length-1) 
+	{
+		cancelIndex++;
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
+		var image = new Image();
+		var index = cancelList.length-1 - cancelIndex;
+		image.src = cancelList[index];
+		image.onload = function(){
+			context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+		}
+                add_user_file('back',cancelList[index])
+		update_RightMenu(label); 
+	}else if (label>=0 && Role_List[label].cancelIndex<Role_List[label].cancelList.length-1)
+	{
+		Role_List[label].cancelIndex++;
+		Role_List[label].Role_context.clearRect(0, 0, Role_canvasWidth, Role_canvasHeight);
+		var image = new Image();
+		var index =Role_List[label].cancelList.length-1 - Role_List[label].cancelIndex;
+		image.src = Role_List[label].cancelList[index];
+		image.onload = function(){
+			Role_List[label].Role_context.drawImage(image, 0, 0, image.width, image.height, 0, 0, Role_canvasWidth, Role_canvasHeight);
+		}
+		update_RightMenu(label); 
+	}else if (label==-2 && Add_cancelIndex<Add_cancelList.length-1)
+	{
+		Add_cancelIndex++;
+		context_add.clearRect(0, 0, canvasWidth, canvasHeight);
+		var image = new Image();
+		var index = Add_cancelList.length-1 - Add_cancelIndex;
+		image.src = Add_cancelList[index];
+		image.onload = function(){
+			context_add.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+		}
+		update_RightMenu(label);
+	}
+}
+
+
+//下一步
+var next = function(){
+	var label = Find_Canvas(); 
+	if (label==-1 && cancelIndex>0)
+	{
+		cancelIndex--;
+		context.clearRect(0,0,canvasWidth,canvasHeight);
+		var  image = new Image();
+		var index = cancelList.length-1 - cancelIndex  ;
+		image.src = cancelList[index];
+		image.onload = function(){
+			context.drawImage(image , 0 ,0 , image.width , image.height , 0 ,0 , canvasWidth , canvasHeight);
+		}
+                add_user_file('next',cancelList[index])
+		update_RightMenu(label); 
+	}else if (label>=0 && Role_List[label].cancelIndex>0)
+	{
+
+		Role_List[label].cancelIndex--;
+		Role_List[label].Role_context.clearRect(0, 0, Role_canvasWidth, Role_canvasHeight);
+		var image = new Image();
+		var index =Role_List[label].cancelList.length-1 - Role_List[label].cancelIndex;
+		image.src = Role_List[label].cancelList[index];
+		image.onload = function(){
+			Role_List[label].Role_context.drawImage(image, 0, 0, image.width, image.height, 0, 0, Role_canvasWidth, Role_canvasHeight);
+		}
+		update_RightMenu(label); 
+	}else if (label==-2 && Add_cancelIndex>0)
+	{
+		Add_cancelIndex--;
+		context_add.clearRect(0, 0, canvasWidth, canvasHeight);
+		var image = new Image();
+		var index = Add_cancelList.length-1 - Add_cancelIndex;
+		image.src = Add_cancelList[index];
+		image.onload = function(){
+			context_add.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+		}
+		update_RightMenu(label);
+	}
+}
+
+
+//清除当前图层的内容		
+var clearContext = function(){
+	console.log("Doing clearContext!"); 
+	var label = Find_Canvas();  
+	if (label==-1)
+	{
+		context.clearRect(0,0,canvasWidth,canvasHeight);
+		var dataUrl =  canvas.toDataURL();
+		cancelList.push(dataUrl);
+		update_RightMenu(label); 
+	}else if (label==-2)
+	{
+		context_add.clearRect(0,0,canvasWidth,canvasHeight);
+		var dataUrl =  canvas_add.toDataURL();
+		Add_cancelList.push(dataUrl);
+		update_RightMenu(label); 
+	}
+	else if (label>=0)
+	{   
+		Role_List[label].Role_context.clearRect(0,0,Role_canvasWidth,Role_canvasHeight);
+		var dataUrl = Role_List[label].Role_canvas.toDataURL();
+		Role_List[label].cancelList.push(dataUrl); 
+		update_RightMenu(label); 
+	}
+}
+
+
+//重新计算蒙版并显示
+var Caculate_Cover = function(){
+	if (pattern == "Scene" || pattern=='Add')
+	{
+		$("#canvas_cover").css("visibility","hidden"); 
+	}else if (pattern == "Role")
+	{
+		if (Role_List.length==0)
+		{
+			var canvas_cover = document.getElementById("canvas_cover");
+			canvas_cover.width = canvasWidth;
+            canvas_cover.height = canvasHeight;
+        	var cxt = canvas_cover.getContext("2d");
+        	$("#canvas_cover").css("background","rgba(0,0,0,0)"); 
+            //填充颜色
+        	cxt.fillStyle = 'rgba(0,0,0,0.2)';
+        	cxt.fillRect(0,0,canvasWidth,canvasHeight);
+			$("#canvas_cover").css("visibility","visible"); 
+		} else{
+
+			var label = Find_Canvas();
+			var Role_canvas_id = "#"+Role_List[label].canvas_name; 
+			var canvas_cover = document.getElementById("canvas_cover");
+			canvas_cover.width = canvasWidth;
+            canvas_cover.height = canvasHeight;
+        	var cxt = canvas_cover.getContext("2d");
+
+        	$("#canvas_cover").css("background","rgba(0,0,0,0)"); 
+            //填充颜色
+        	cxt.fillStyle = 'rgba(0,0,0,0.2)';
+        	//绘制实心矩形 距离左边距，距离上边距，矩形长度，矩形高度
+        	var cover_top = $(Role_canvas_id).css("top");
+        	cover_top = parseInt(cover_top); 
+        	var cover_left = $(Role_canvas_id).css("left"); 
+        	cover_left = parseInt(cover_left); 
+        	//填这个矩形未盖住的部分
+        	cxt.fillRect(0,0,cover_left,canvasHeight);
+        	cxt.fillRect(cover_left+Role_canvasWidth,0,canvasWidth-cover_left-Role_canvasWidth,canvasHeight);
+        	cxt.fillRect(cover_left,0,Role_canvasWidth,cover_top);
+        	cxt.fillRect(cover_left,cover_top+Role_canvasHeight,Role_canvasWidth,canvasHeight-cover_top-Role_canvasHeight);     	
+        	$("#canvas_cover").css("visibility","visible"); 
+
+		}
+	}
+}
+
+
+//更改一个角色图层的显示形式，编辑或者不编辑
+var Turn_Role = function(obj,op){
+	if (op == "hidden")
+	{
+		$("#"+obj).css({"border":"none","pointer-events":"none"}); 
+		$("#"+obj+"_mov").css({"visibility":"hidden","pointer-events":"none"}); 
+	} else  if (op =="display")
+	{
+		$("#"+obj).css({"border":"2px solid rgba(122, 100, 78, 100)","pointer-events":"auto"}); 
+		$("#"+obj+"_mov").css({"visibility":"visible","pointer-events":"auto"}); 
+	}
+}
+
+
+
+//更新右边列表的图片
+var update_RightMenu = function(label){
+	/*
+	if (label==-1 && cancelList.length>0)
+	{
+		var image = document.getElementById("bg_show"); 
+		var index = cancelList.length-1 - cancelIndex;
+		image.src = cancelList[index];
+	} else if (label>=0 && Role_List[label].cancelList.length>0){
+		var image = document.getElementById(Role_List[label].canvas_name+"_show"); 
+		var index = Role_List[label].cancelList.length-1 - Role_List[label].cancelIndex;
+		image.src = Role_List[label].cancelList[index];
+	}*/
+}
+
+
+
+//定义切换到场景的事件
+var Going_To_Scene = function(){
+	if (Role_List.length>0) Turn_Role(current_Role,"hidden");
+	pattern = "Scene";  
+	$('#my-navbar-nav li:eq(0) a').tab('show');
+	$("#mytool-nav .main-choose a").css("background-color","transparent")
+    $("#Scene").css("background-color","#FFF");
+    $("#canvas_add").css("visibility",'hidden');
+    Caculate_Cover(); 
+}
+
+
+//定义切换到角色的事件
+var Going_To_Role = function(){	 
+	if (Role_List.length>0) Turn_Role(current_Role,"display"); 
+	pattern = "Role"; 
+	$('#my-navbar-nav li:eq(1) a').tab('show');
+	$("#mytool-nav .main-choose a").css("background-color","transparent")
+    $("#Role").css("background-color","#FFF");
+    $("#canvas_add").css("visibility",'hidden'); 
+	Caculate_Cover();
+}
+
+var Going_To_Add = function(){
+	$("#canvas_add").css("visibility","visible"); 
+	if (Role_List.length>0) Turn_Role(current_Role,"hidden");
+	pattern = "Add";  
+	//$('#my-navbar-nav li:eq(0) a').tab('show');
+	//$("#mytool-nav .main-choose a").css("background-color","transparent")
+    //$("#Scene").css("background-color","#FFF");
+    Caculate_Cover(); 
+}
+
+
+//删除一个角色图层
+var Role_del = function(obj){
+	var i; 
+	for(i=0; i<Role_List.length; i++)
+		if (Role_List[i].canvas_name == obj) break; 
+	Role_List.splice(i,1); 
+	for(i=0; i<Layer_orders.length; i++)
+		if (Layer_orders[i] == obj) break;
+	Layer_orders.splice(i,1); 
+	$("#"+obj).remove(); 
+	$("#"+obj+"_mov").remove(); 
+	$("#"+obj+"_div").remove();
+	Caculate_Order();
+	//console.log("After remov:",Layer_orders); 
+	if (current_Role == obj && Layer_orders.length>1)
+	{
+		current_Role = Layer_orders[Layer_orders.length-1]; 
+		Turn_Role(current_Role,"display"); 
+		
+	}
+	Caculate_Cover(); 
+}
+
+
+//图层菜单显示事件
+var display_menu = function(obj,is_move_div){  
+      if (is_move_div==false)
+        $("#"+obj+"_trash").css("visibility","visible");
+    	$("#"+obj+"_order").css("visibility","visible");
+};
+
+
+var hidden_menu = function(obj,is_move_div){
+      if (is_move_div==false)
+        $("#"+obj+"_trash").css("visibility","hidden");
+    	$("#"+obj+"_order").css("visibility","hidden");
+}; 
+
+
+//图层功能绑定
+var bind_div_menu =function(is_move_div) {   
+      $(".w3-button").mouseenter(function(){
+        var obj = $(this).attr("id").slice(0,-4); 
+        display_menu(obj,is_move_div)
+      });
+
+      $(".w3-button").mouseleave(function(){
+        var obj = $(this).attr("id").slice(0,-4); 
+        hidden_menu(obj,is_move_div)
+      });
+}
+
+
+//重新计算右边图层的顺序
+var Caculate_Order = function(){
+	Layer_orders.length = 0 
+	var  all_layer = $("#rightMenu").children(".w3-bar-item"); 
+	for (var i=all_layer.length-1; i>=0; i--)
+	{
+		var name = all_layer[i].getAttribute("id").slice(0,-4);
+		Layer_orders.push(name);  
+	}
+}
+
+
+function download(source_canvas,type) {
+    //设置保存图片的类型
+    console.log("begin download!")
+    var imgdata = source_canvas.toDataURL(type);
+    //将mime-type改为image/octet-stream,强制让浏览器下载
+    var fixtype = function (type) {
+        type = type.toLocaleLowerCase().replace(/jpg/i, 'jpeg');
+        var r = type.match(/png|jpeg|bmp|gif/)[0];
+        return 'image/' + r;
+    }
+    imgdata = imgdata.replace(fixtype(type), 'image/octet-stream')
+    //将图片保存到本地
+    var saveFile = function (data, filename) {
+        var link = document.createElement('a');
+        link.href = data;
+        link.download = filename;
+        var event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        link.dispatchEvent(event);
+        console.log("finish download!");
+    }
+    var filename = new Date().toLocaleString() + '.' + type;
+    saveFile(imgdata, filename);
+}
+
+var Clip_flag = false //false表示未在截图，true表示正在截图还没结束
+//截取当前画面,保存到context_clicp
+var Clip_current=function()
+{
+	Clip_flag = true; 
+	console.log("begin clip"); 
+	context_clip.clearRect(0,0,canvasWidth,canvasHeight);
+	var Clip_pattern = ""; 
+	if ($('#canvas_result').css('visibility')=='hidden') //保存Label图
+	{
+		Clip_pattern = 'canvas_Label';
+		var dataUrl_Label = canvas.toDataURL(); 
+		var image_Label = new Image(); 
+		image_Label.src = dataUrl_Label; 
+		image_Label.onload = function()
+		{ 
+			context_clip.drawImage(image_Label,0,0,image_Label.width,image_Label.height,0,0,canvasWidth,canvasHeight);
+			Clip_flag = false; 
+		}
+		console.log("canvas_Label_clip.")
+	} else
+	{
+		Clip_pattern = 'canvas_result';
+		var dataUrl = canvas_result.toDataURL(); 
+		var image = new Image(); 
+		image.src = dataUrl; 
+		image.onload = function()
+		{ 
+			context_clip.drawImage(image,0,0,image.width,image.height,0,0,canvasWidth,canvasHeight); 
+		}
+		/*
+		var dataUrl_add = canvas_add.toDataURL(); 
+		var image_add = new Image(); 
+		image_add.src = dataUrl_add; 
+		image_add.onload = function()
+		{
+			//console.log('drawing bg!!!!'); 
+			context_clip.drawImage(image_add,0,0,image_add.width,image_add.height,0,0,canvasWidth,canvasHeight); 
+		}
+		var flag = 0; 
+		for(var i=1; i<Layer_orders.length; i++)
+		{
+			if (i<Layer_orders.length)
+			{
+				let tmp_name = Layer_orders[i]; 
+				tmp_name = 'result_'+tmp_name; 
+				let tmp_canvas = document.getElementById(tmp_name); 
+				let top = $("#"+tmp_name).css("top");
+				top = parseInt(top); 
+				let left = $("#"+tmp_name).css("left");
+				left = parseInt(left);
+				let dataUrl = tmp_canvas.toDataURL(); 
+				let img = new Image(); 
+				
+				img.onload = function()
+				{
+					console.log("image_width",img.width); 
+					console.log("image_height",img.height); 
+					context_clip.drawImage(img,0,0,img.width,img.height,left,top,img.width,img.height);
+					console.log("have done!!!"); 	
+					flag+=1; 
+					console.log("flag",flag); 
+				}
+				img.src=dataUrl; 			
+			} 	
+		}*/
+	}	
+	var stop_clip=setInterval(function(){
+		if((Clip_pattern=='canvas_result') //&& flag == Layer_orders.length-1) 
+			|| (Clip_pattern=='canvas_Label' && Clip_flag ==false))
+		{
+			window.clearInterval(stop_clip);
+			Clip_flag = false; 
+		}
+	},190); 
+}
+
+var Save_to_Local = function(){
+	console.log("Save_to_Local")
+	Clip_current()
+	
+	let done_flag = false; 
+	var get_save = setInterval(function(){
+		if(Clip_flag==false && done_flag==false)
+		{
+			done_flag=true; 
+			download(canvas_clip,'png');
+			window.clearInterval(get_save);
+		}
+	},200)
+	
+}
+
+//添加到画卷
+var Add_to_Book=function(){
+	Clip_current()
+	let done_flag =false; 
+	var get_small_img = setInterval(function(){
+		if (Clip_flag == false && done_flag==false)
+		{
+			done_flag=true; 
+			$("#canvas_clip").css('visibility','hidden');
+			var id = 'drawing_page'+drawing_page.toString(); 
+			console.log('drawing page',id); 
+			small_image = document.getElementById(id) 
+			var dataUrl_clip = canvas_clip.toDataURL(); 
+			small_image.src=dataUrl_clip; 
+			small_image.onload = function()
+			{
+					console.log("upate_drawing_page!"); 
+			}
+			//download(canvas_clip,'png');
+			window.clearInterval(get_small_img);
+			pdf_data.push(dataUrl_clip); 
+			drawing_page += 1;				
+		}
+	},200); 	
+}
+
+
+var generate_pdf=function(){
+    console.log("begin generate_pdf!"); 
+    var doc = new jsPDF('landscape','px',[1024, 512])
+	for (var i=0; i<pdf_data.length; i++)
+	{
+		    var title = "Page "+(i+1).toString(); 
+		    if (i>0) doc.addPage(); 
+			//doc.setFontSize(40);
+			//doc.text(15, 25, title);
+			doc.addImage(pdf_data[i],'png', 0, 0, 1024, 512);		
+	}
+	doc.save('http://painting.nhcilab.com/static/js/Picture_book.pdf')
+}; 
+
+
+var add_user_file = function(operate_name,data)
+{
+	   var  fd = new FormData();
+	   data = data.substr(22); 
+	   fd.append(operate_name,data); 
+	   User_steps = User_steps+1; 
+	   fd.append('steps',User_steps); 
+	   $.ajax({
+        type:"POST", 
+        url:"/ajax_dict", 
+        data:fd,
+        dataType:"json",
+        contentType:false,
+        processData:false,
+        success:function(ret) {
+          console.log("success add_user_file!")
+        }
+      })
+}
+
+
+
+

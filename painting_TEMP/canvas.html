@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://painting.nhcilab.com/canvas.html# -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta content="yes" name="apple-mobile-web-app-capable">
+      <meta content="yes" name="apple-touch-fullscreen">
+      <meta content="telephone=no,email=no" name="format-detection">
+      <meta name="viewport" content="width=device-width,user-scalable=no,minimal-ui">
+      <meta name="apple-mobile-web-app-title" content="MORAN_0.1">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <title>MORAN_0.1</title> 
+      <link href="http://painting.nhcilab.com/static/images/aipainting-logo.png" rel="apple-touch-icon-precomposed">
+      <link href="http://painting.nhcilab.com/static/images/aipainting-logo.png" rel="Shortcut Icon" type="image/x-icon">
+      <script type="text/javascript" src="./MORAN_0.1_files/jquery.js.下载"></script>
+      <script type="text/javascript" src="./MORAN_0.1_files/jspdf.js.下载"></script>
+      <script type="text/javascript" src="./MORAN_0.1_files/bootstrap.min.js.下载"></script> 
+      <script language="javascript" src="./MORAN_0.1_files/jquery.jqprint-0.3.js.下载"></script>
+    <!-- 
+    <script type="text/javascript" src="js/draw.js"></script>--> 
+  <!--   <script type="text/javascript" src="js/draw-1.js"></script>
+  <script type="text/javascript" src="js/main-1.js"></script> -->
+  <link href="./MORAN_0.1_files/css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="./MORAN_0.1_files/test1.css">
+  <link href="./MORAN_0.1_files/bootstrap.css" rel="stylesheet" type="text/css">
+  <!--
+  <link href="./static/css/main.css" rel="stylesheet" type="text/css"> -->
+  <link href="./MORAN_0.1_files/canvas.css" rel="stylesheet" type="text/css">
+
+  <script type="text/javascript" src="./MORAN_0.1_files/canvas.js.下载"></script>
+
+  <script type="text/javascript" src="./MORAN_0.1_files/drag.js.下载"></script>
+  <script type="text/javascript" src="./MORAN_0.1_files/jquery-ui.js.下载"></script>
+  <link href="./MORAN_0.1_files/jquery-ui.css" rel="stylesheet" type="text/css">
+  <script src="./MORAN_0.1_files/jspdf.debug.js.下载" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="./MORAN_0.1_files/jPicker-1.1.6.css">
+  <link href="./MORAN_0.1_files/iconfont.css" rel="stylesheet" type="text/css">
+  <script src="./MORAN_0.1_files/jpicker-1.1.6.js.下载" type="text/javascript"></script>
+
+</head>
+<body>
+  <!--导航栏-->
+  <!-- <nav class="navbar navbar-default navbar-fixed-top" id="my-nav">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">AI Painting</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right" id="my-nav-right">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="canvas.html">画作</a></li> 
+          <li><a href="user.html">个人</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav> -->
+  <!--NEW 导航栏-->
+  
+  <div class="box">
+      <div class="mask"></div>
+  <nav class="navbar navbar-default" id="canvas-nav">
+      <div class="container">
+        <div class="navbar-header">
+          <!--<a class="navbar-brand" href="#"><img src="./static/images/AI-painting-LOGO.png" height="40px"></a>-->
+          <button class="iconfont have_hover iconhuiche"></button>
+          <button class="iconfont have_hover iconqianjin"></button>
+          <span class="spanspan">|</span>
+          <button type="button" class="iconfont iconhuabi" onclick="displayBrush()" ></button>
+          <button type="button" class="iconfont iconxiangpi" onclick="displayEraser()");"></button>
+        </div>
+        <div id="navbar">
+          <ul class="nav navbar-nav navbar-right" id="canvas-nav-right">
+              <li>
+                <button class="sketch-mode">清除所有</button>
+              </li>
+              <!--<li>
+                <button class="random-set" onclick="ResetScene('reset')">推荐预设</button>
+              </li>-->
+              <li>
+                <button class="AI-generate">AI生成</button>
+              </li>
+          </ul>
+        </div>
+      </div>
+  </nav>
+  
+  <div class="tool" style="display: block;">
+              <div id="brush" style="display: block;">
+              <ul>
+                    <li class="size-text"><a>画笔大小</a></li>
+                    <input class="size-text" type="range" value="50" min="0" max="100" id="Add_drawing-line-width" >
+                    <li class="size-text"><a id="display_pen_size">50 px</a></li>
+                    <!--<span class="spanspan">|</span>-->
+                    <!--<li onclick="draw_graph('grass')" id="grass_pic" style="color: rgb(10, 192, 197);"><a class="normal mountain iconfont iconcaodi" data-stoppropagation="true" style="color: rgb(10, 192, 197);"></a>草地</li>
+-->
+                    <!--<li onclick="draw_graph('mountain')" id="mountain_pic" style="color: rgb(125, 140, 143);"><a class="normal grass iconfont iconshanluan" style="color: rgb(125, 140, 143);"></a>山峦</li>-->
+                    <!--<li onclick="draw_graph('house')" id="house_pic"><a class="normal tree iconfont iconfangwu"></a>房屋</li>-->
+                    <!--<li onclick="draw_graph('stone')" id="stone_pic"><a class="normal house iconfont iconyanshi"></a>岩石</li>-->
+                    <!--<li onclick="draw_graph('river')" id="river_pic"><a class="normal sky iconfont iconheliu"></a>河流</li>-->
+                    <!--<li onclick="draw_graph('road')" id="road_pic"><a class="normal river iconfont icondaolu"></a>道路</li>-->
+                    <!--<li onclick="draw_graph('sky')" id="sky_pic" style="color: rgb(10, 192, 197);"><a class="normal road iconfont icontiankong" style="color: rgb(10, 192, 197);"></a>天空</li>-->
+                    <!--li onclick="draw_graph('tree')" id="tree_pic"><a class="normal stone iconfont iconshumu"></a>树木</li>-->
+
+                </ul> 
+              </div>
+              <div id="eraser" style="display: none;">
+                <ul>
+                    <li class="size-text"><a>橡皮大小</a></li>
+                    <input class="size-text" type="range" value="50" min="0" max="100" id="Add_eraser-width" >
+                    <li class="size-text"><a id="display_eraser_size">50 px</a></li>
+                </ul>
+              </div>
+  </div>
+
+  <div class="our-content-plus">
+
+      <!--<nav id="mytool-nav">
+        <div id="myTab" class="navbar-collapse">
+          <ul class="nav navbar-nav" id="my-navbar-nav" >
+            <li class="main-choose"><a id="Scene" href="#background" data-toggle="tab"><img class="tool-choose" src="./static/img/tool/background.png"></a></li>
+            <li class="main-choose"><a id="Role" href="#object" data-toggle="tab"><img src="./static/img/tool/role.png"></a></li>
+            <li class="main-choose"><a id="Add" href="#add" data-toggle="tab"><img src="./static/img/tool/doodle.png"></a></li>  
+            <li class="normal save" title="保存到本地"><a><img src="./static/img/tool/save.png"></a></li>
+            <li class="normal generate-jpg" title="截取到画卷"><a ><img src="./static/img/tool/generatejpg.png"></a></li>
+            <li class="normal last" title="撤销上一个操作"><a><img src="./static/img/tool/last.png"></a></li>
+            <li class="normal next" title="重做上一个操作"><a><img src="./static/img/tool/next.png"></a></li> 
+          </ul>
+        </div>
+
+      </nav>-->
+        <!--画布-->
+    <div class="canvas_container" id="canvas_container">  
+        <canvas id="canvas" width="920" height="460">
+        </canvas>
+        <canvas id="canvas_result" class="canvas_result" width="920" height="460">
+        </canvas>
+        <canvas id="canvas_clip" class="canvas_clip" width="920" height="460">
+        </canvas>
+        <div id="loading" class="loading"><p>系统正在努力生成中，请耐心等待...</p></div> 
+    </div>
+    <div class="floor-floor">
+      <div class="w3-sidebar w3-bar-block w3-card w3-animate-right ui-sortable" style="display: none; position: relative; height: 610px;" id="rightMenu">
+        <div class="menu_title">
+          <p style="display: inline-block; margin: 14px 10px 7px 20px; color: #9199a5;">References</p>
+          <div class="layers" id="back-list" style="float: right;top:0px; ">
+                <a onclick="closeRightMenu()" class="left_button iconfont iconshouqi"></a>
+          </div>
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page1">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page2">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page3">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page4">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page5">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page6">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page7">
+        </div>
+        <div class="display_near_block">
+            <img class="display_near_pic" id="drawing_page8">
+        </div>
+      </div>
+      <div class="layers" onclick="openRightMenu()" id="openRightMenu">
+        <a class="left_button iconfont iconzhankai"></a>
+      </div>
+    </div>    
+  </div>
+</div>
+  <!-- <div id="loading" class="loading"><p>系统正在努力生成中，请耐心等待...</p></div>  --> 
+<!-- 画布 
+<div class="canvas_container" id="canvas_container">  
+  <canvas id="canvas" class="Scent_canvas">
+  </canvas>
+  <canvas id="canvas_cover" class="canvas_cover">
+  </canvas>
+  <canvas id="canvas_result" class="canvas_result">
+  </canvas>
+  <canvas id="canvas_clip" class="canvas_clip">
+  </canvas>
+  <canvas id="canvas_add" class="canvas_add">
+  </canvas>
+</div>-->
+
+<!-- 绘本列表 
+<div class="list-pic-package">
+  <div><a class="list-left-choose"></a></div>
+  <div class="list-pic">
+    <li><img id="drawing_page1"></li>
+    <li><img id="drawing_page2"></li>
+    <li><img id="drawing_page3"></li>
+    <li><img id="drawing_page4"></li>
+    <li><img id="drawing_page5"></li>                 
+  </div>
+  <div><a class="list-right-choose"></a></div>
+</div>-->
+
+<!-- 图层列表 
+<div class="floor-floor">
+  <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;position: relative;" id="rightMenu">
+    <div class="menu_title" onclick="closeRightMenu()">
+      <div class="layers" style="float: right;top:0px; ">
+        <a class="left_button" style="background-image: url(./static/img/tool/right-choose.png)"></a>
+      </div>
+    </div>
+    <div class="layer_title">
+      <div class="layers" style="top:0px; width: 100%">
+        <a class="layer" style="text-decoration: none;"><p>图层列表</p></a>
+      </div>
+    </div>
+    <div class="w3-bar-item" id="bg_div">
+      <img id="bg_show" onclick="Going_To_Scene()">
+    </div>
+  </div>
+  <div class="layers" onclick="openRightMenu()" id="openRightMenu">
+    <a class="left_button"></a>
+  </div>
+  <div class="layers" id="Rightlayer">
+    <a class="layer"></a>
+  </div>
+</div>-->
+<!--<input type="file" id="file" value="上传" accept="image/png, image/jpeg, image/gif, image/jpg" style='position: absolute;z-index: 200'>-->
+<!-- <script type="text/javascript">
+    var file = document.getElementById("file"); 
+    file.onchange = function(){
+      var f = this.files[0]; 
+      var reader = new FileReader(); 
+      reader.readAsDataURL(f); 
+      reader.onload = function(){
+        var image = new Image();
+      image.src = reader.result; 
+      image.onload = function(){
+        //clearContext(); 
+        context.clearRect(0,0,canvasWidth,canvasHeight);
+        context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+        cancelIndex = 0;
+        var dataUrl =  canvas.toDataURL();
+        cancelList.push(dataUrl);
+        update_RightMenu(-1); 
+        Scene.upload_type = 'Picture'
+        Something_change = true; 
+        Detect_change = true; 
+      };
+      }; 
+    };
+</!--><!--<button id='ResetScene' onclick="ResetScene()">reset</button> -->
+<script type="text/javascript">
+  function build_Uesr_files(){
+     var fd = new FormData()
+     var date = new Date()
+     console.log('Build new files', date.toLocaleString())
+     fd.append('Build',date.toLocaleString())
+     $.ajax({
+            type:"POST", 
+            url:"/ajax_dict", 
+            data:fd,
+            dataType:"json",
+            contentType:false,
+            processData:false,
+            success:function(ret){
+                   console.log("Successful build a user files"); 
+            }
+     })
+  }
+
+  
+  function isEmptyObject(obj){
+    for(var item in obj){
+        return false
+    }
+    {
+        return true
+    }
+  }
+
+  function clearObj(obj){
+    for(var key in obj){
+      delete obj[key]
+    }
+  }
+  
+
+  function ResetScene(type){
+    if (Display_result==true)
+    {
+      console.log("web begin to print")
+      var fd = new FormData();
+      fd.append('print','1')
+      $.ajax({
+            type:"POST", 
+            url:"/ajax_dict", 
+            data:fd,
+            dataType:"json",
+            contentType:false,
+            processData:false,
+            success:function(ret) {
+              console.log('here to get image')
+              dataurl = ret['print']
+              var len = dataurl.length-3
+              dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+
+
+              var print_div = document.createElement("div");
+              print_div.setAttribute('id','print_div')
+              var print_img = document.createElement("img");
+              print_img.setAttribute('id','print_img')
+              print_div.appendChild(print_img)
+              
+              print_img.src = dataurl
+
+              ours = document.getElementById('canvas_container')
+              ours.appendChild(print_div)
+              print_div.style.display='none'
+              
+              //print_img=null
+
+              $("#print_img").jqprint({
+                        debug: false, 
+                        importCSS: false, 
+                        printContainer: true,
+                        operaSupport: false 
+              });     
+            }
+      })
+      return; 
+    }
+    var  fd = new FormData();
+    if (Have_generation == true){
+      Have_generation = false; 
+      console.log('begin build')
+      User_steps = 0;
+      build_Uesr_files(); 
+      if (type=='reset'){
+           User_steps=User_steps+1; 
+      }
+      //fd.append('reset',User_steps)
+      fd.append(type,User_steps)
+    } else 
+    {
+      User_steps=User_steps+1; 
+      //fd.append('reset',User_steps)
+      fd.append(type,User_steps)
+      console.log('resetscene',type)
+    }
+    if (type=='reset')
+    {
+        $.ajax({
+                type:"POST", 
+                url:"/ajax_dict", 
+                data:fd,
+                dataType:"json",
+                contentType:false,
+                processData:false,
+                success:function(ret) {
+                  var dataurl;
+                  dataurl = ret['reset_map']
+                  var len = dataurl.length-3
+                  
+                  dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+                  var image = new Image();
+                  image.setAttribute("src",dataurl)
+                  image.onload = function(){
+                        context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);  
+                        Something_change = true; 
+                  }
+                }
+        })
+    } else 
+    {
+        $.ajax({
+                type:"POST", 
+                url:"/ajax_dict", 
+                data:fd,
+                dataType:"json",
+                contentType:false,
+                processData:false,
+                success:function(ret) {
+                }
+        })
+    }
+  }; 
+  ResetScene('clear')
+</script>
+<!--<input type="file" id="file" value="上传" accept="image/png, image/jpeg, image/gif, image/jpg" style='position: absolute;z-index: 200'>-->
+
+<script type="text/javascript">
+    var file = document.getElementById("file"); 
+    file.onchange = function(){
+      var f = this.files[0]; 
+      var reader = new FileReader(); 
+      reader.readAsDataURL(f); 
+      reader.onload = function(){
+        var image = new Image();
+      image.src = reader.result; 
+      image.onload = function(){
+        //clearContext(); 
+        context.clearRect(0,0,canvasWidth,canvasHeight);
+        context.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+        cancelIndex = 0;
+        var dataUrl =  canvas.toDataURL();
+        cancelList.push(dataUrl);
+        update_RightMenu(-1); 
+        Scene.upload_type = 'Picture'
+        Something_change = true; 
+        Detect_change = true; 
+      };
+      }; 
+    };
+</script>
+
+
+
+
+<script>
+  
+  document.body.addEventListener('touchmove',function(e){
+    //alert(e.target.nodeName); 
+    if (e.target.nodeName!='INPUT') e.preventDefault(); 
+  })
+  //对初始的选择视图显示
+  $("#"+pattern).css("background-color", "#FFF");
+  $("#"+Scene.grah).css("background-image", "url(./static/img/tool/"+Scene.grah+"-1.png)");
+  $("#"+Scene.grah).css("border", "1px solid rgba(122, 100, 78, 100)");
+  $("#"+Scene.tool).css("border", "1px solid rgba(122, 100, 78, 100)");
+  $("#"+Scene.way).css("background-color", "rgba(242, 242, 242, 1)");
+  $("#"+Role.grah).css("background-image", "url(./static/img/tool/"+Role.grah+"-1.png)");
+  $("#"+Role.grah).css("border", "1px solid rgba(122, 100, 78, 100)");
+  $("#"+Role.tool).css("border", "1px solid rgba(122, 100, 78, 100)");
+  $("#"+Add.tool).css("border", "1px solid rgba(122, 100, 78, 100)");
+
+  
+  //切换首选项
+  $("#mytool-nav .main-choose a").click(function() {
+    $("#mytool-nav .main-choose a").css("background-color", "transparent")
+    $(this).css("background-color", "#FFF");
+    pattern = $(this).attr("id");
+    //Caculate_Cover();
+    if (pattern=='Scene') Going_To_Scene();
+    else if (pattern=='Role') Going_To_Role();
+    else if (pattern=='Add') 
+    {
+      Going_To_Add();
+      draw_graph('Add',this); 
+    } 
+    console.log('here pattern',pattern);
+  })
+
+
+  //切换场景模式
+  $(".choose-draw-or-upload li a").click(function() {
+    $(".choose-draw-or-upload li a").css("background-color", "transparent");
+    $(this).css("background-color", "rgba(242, 242, 242, 1)");
+    Scene.way = $(this).attr("id");
+    console.log("http://painting.nhcilab.com/Scene.way", Scene.way);
+  });
+
+
+  //切换场景
+  $(".background-edge-tool-row li a").click(function() {
+    if ($(this).attr("id")!="size" && $(this).attr("id")!="eraser") {
+      var Scene_grah_init = function() {
+        $("#mountain").css({"background-image":"url(./static/img/tool/mountain.png)","border":"none"});
+        $("#grass").css({"background-image":"url(./static/img/tool/grass.png)","border":"none"});
+        $("#tree").css({"background-image":"url(./static/img/tool/tree.png)","border":"none"});
+        $("#house").css({"background-image":"url(./static/img/tool/house.png)","border":"none"});
+        $("#sky").css({"background-image":"url(./static/img/tool/sky.png)","border":"none"});
+        $("#river").css({"background-image":"url(./static/img/tool/river.png)","border":"none"});
+        $("#road").css({"background-image":"url(./static/img/tool/road.png)","border":"none"});
+        $("#stone").css({"background-image":"url(./static/img/tool/stone.png)","border":"none"});
+      };
+      Scene_grah_init();
+      Scene.grah = $(this).attr("id");
+      $(this).css("background-image", "url(./static/img/tool/"+Scene.grah+"-1.png)");
+      $(this).css("border", "1px solid rgba(122, 100, 78, 100)");
+    }
+
+    else {
+      $("#"+Scene.tool).css("border", "none");
+      Scene.tool = $(this).attr("id");
+      $(this).css("border", "1px solid rgba(122, 100, 78, 100)");
+    }
+  })
+
+
+
+  //设置场景笔画粗细
+  $("#"+"Add_drawing-line-width").on('input propertychange', function() {
+    if ($(this).val()==0) 
+    {Scene.pen_size=1}
+     else if ($(this).val()==100) 
+    {
+        Scene.pen_size=99
+    }else 
+    {
+      Scene.pen_size=($(this).val()/100)*(Scene.max_size-Scene.min_size)+Scene.min_size; 
+    }
+    display_number = Math.floor(Scene.pen_size)
+    if (display_number<10)
+    {
+      display_number = "0"+Math.floor(Scene.pen_size).toString()+" px"
+    } else 
+    {
+      display_number = Math.floor(Scene.pen_size).toString()+" px"
+    }
+    $('#display_pen_size').text(display_number)
+    //console.log(Scene.pen_size);
+
+    
+    $(this).css({
+      "background-size":Scene.pen_size.toString()+"% 100%"
+    });
+  });
+
+
+  //设置场景橡皮擦粗细
+  $("#"+"Add_eraser-width").on('input propertychange', function() {
+    if ($(this).val()==0) 
+    {Scene.eraser_size=1}
+     else if ($(this).val()==100) 
+    {
+        Scene.eraser_size=99
+    }else 
+    {
+      Scene.eraser_size=($(this).val()/100)*(Scene.max_size-Scene.min_size)+Scene.min_size; 
+    }
+    display_number = Math.floor(Scene.eraser_size)
+    if (display_number<10)
+    {
+      display_number = "0"+Math.floor(Scene.eraser_size).toString()+" px"
+    } else 
+    {
+      display_number = Math.floor(Scene.eraser_size).toString()+" px"
+    }
+    $('#display_eraser_size').text(display_number)
+    //Scene.eraser_size=($(this).val()/5)*(Scene.eraser_max_size-Scene.eraser_min_size)+Scene.eraser_min_size;
+    $(this).css({
+      "background-size":Scene.eraser_size.toString()+"% 100%"
+    });
+  });
+
+  $('.iconhuabi').css('color', '#0AC0C5'); 
+  //切换角色
+  $(".object-edge-tool-row li a").click(function() {
+    console.log('object click!');
+    if ($(this).attr("id")!="Role_size" && $(this).attr("id")!="Role_eraser") {
+      var Role_grah_init = function() {
+        $("#cat").css({"background-image":"url(./static/img/tool/cat.png)","border":"none"});
+        $("#bird").css({"background-image":"url(./static/img/tool/bird.png)","border":"none"});
+        $("#plant").css({"background-image":"url(./static/img/tool/plant.png)","border":"none"});
+      };
+      Role_grah_init();
+      Role.grah = $(this).attr("id");
+      $(this).css("border", "1px solid rgba(122, 100, 78, 100)");
+      $(this).css("background-image", "url(./static/img/tool/"+Role.grah+"-1.png)");
+      for(let i=0; i<12; i++){
+
+        //./static/img/examples/cats/12.png
+        $('#img_'+(i+1).toString()).attr('src','./static/img/examples/'+Role.grah+'s/'+(i+1).toString()+'.png')
+      }
+    }
+
+    else {
+      $("#"+Role.tool).css("border", "none");
+      Role.tool = $(this).attr("id");
+      $(this).css("border", "1px solid rgba(122, 100, 78, 100)");
+    }
+  });
+
+
+  //设置角色笔画粗细
+  $("#"+"Role_drawing-line-width").on('input propertychange', function() {
+    Role.pen_size=($(this).val()/5)*(Role.max_size-Role.min_size)+Role.min_size;
+    //console.log(Scene.pen_size);
+  });
+
+
+  //设置角色橡皮擦粗细
+  $("#"+"Role_eraser-width").on('input propertychange', function() {
+    Role.eraser_size=($(this).val()/5)*(Role.eraser_max_size-Role.eraser_min_size)+Role.eraser_min_size;
+  });
+
+  //
+  $('.add-edge-package-tool li a').click(function(){
+        if ($(this).attr('id')!='Add_size' && $(this).attr('id')!='Add_eraser')
+        {
+
+        }else 
+        {change
+            $("#"+Add.tool).css("border", "none");
+            Add.tool = $(this).attr("id");
+            $(this).css("border", "1px solid rgba(122, 100, 78, 100)");
+        }
+  }); 
+
+  $("#"+"Add_drawing-line-width").on('input propertychange', function() {
+    Add.pen_size=($(this).val()/5)*(Add.max_size-Add.min_size)+Add.min_size;
+    console.log(Add.pen_size);
+  });
+
+
+  //
+  $("#"+"Add_eraser-width").on('input propertychange', function() {
+    Add.eraser_size=($(this).val()/5)*(Add.eraser_max_size-Add.eraser_min_size)+Add.eraser_min_size;
+  });
+
+  /*
+
+  $('.one-color').click(function(){
+       console.log('change color'); 
+       $('.one-color').css('box-shadow','none'); 
+       var style_shadow = $(this).css('background-color');       
+       if (style_shadow=='rgb(245, 247, 250)') style_shadow = 'rgb(204,209,217)';      
+       style_shadow = style_shadow + ' 0px 0px 10px 2px'; 
+       $(this).css('box-shadow',style_shadow); 
+  }); */
+
+  
+  //$('#Inline').jPicker();
+   
+
+
+  $('#Inline').jPicker(
+        {
+          window:
+          {
+            expandable: true
+          }
+        },
+        function(color, context)
+        {
+          var all = color.val('all');
+          Add.color = (all && '#' + all.hex || 'none');
+          //alert('Color chosen - hex: ' + (all && '#' + all.hex || 'none') + ' - alpha: ' + (all && all.a + '%' || 'none'));
+          //$('#Commit').css(
+          //  {
+           //   backgroundColor: all && '#' + all.hex || 'transparent'
+           // }); // prevent IE from throwing exception if hex is empty
+        }
+  );  
+  $('#Inline').click(function()
+    {
+      console.log('you clicl Inline!')
+       $('#canvas_add').css('pointer-events',"none");
+    }); 
+
+  //设置右边菜单的排序功能
+  $("#rightMenu").sortable( {
+    items: ".w3-button"
+  });
+
+  $("#rightMenu").disableSelection();
+
+
+  //点击AI-generate的链接后台事件
+  $(".AI-generate").click(function(){
+      console.log("AI-generate"); 
+      if (Display_result==true)
+      {
+        Save_to_Local(); 
+        return; 
+      }
+
+      document.getElementById("eraser").style.display='none'; 
+      document.getElementById("brush").style.display='none';
+      $('Button').css('pointer-events','none');
+      $('.iconhuiche').css('pointer-events','none');
+      $('.iconqianjin').css('pointer-events','none');
+      if (Scene.tool=='size')
+      {
+             $('.iconhuabi').css('color',color_tool);
+      }else 
+      {
+            $('.iconxiangpi').css('color',color_tool);
+      }
+
+      var  fd = new FormData();
+      var data = canvas.toDataURL();
+      data = data.substr(22); 
+      if(Scene.way == 'upload' && Scene.upload_type=='Picture')
+      {
+        fd.append('bg',data); 
+        console.log("upload_background")
+      }
+      else if(Scene.way == 'draw' || (Scene.way=='upload' && Scene.upload_type=='Label'))
+      {
+        fd.append('dg', data);
+        console.log("draw_background")
+      }
+      //fd.append('bg',data); 
+
+      Caculate_Order(); 
+      for (var i=0; i<Role_List.length; i++)
+      {
+        var da = Role_List[i].Role_canvas.toDataURL(); 
+        da = da.substr(22); 
+        fd.append(Role_List[i].canvas_name,da)
+      }
+
+      if (Something_change)
+      {
+        $('.loading').css('visibility','visible'); 
+        $('.mask').css('visibility','visible');
+        Have_generation = true; 
+        User_steps=User_steps+1; 
+        fd.append('steps',User_steps); 
+        $.ajax( {
+        type:"POST", 
+        url:"/ajax_dict", 
+        data:fd,
+        dataType:"json",
+        contentType:false,
+        processData:false,
+        success:function(ret) {
+          Something_change = false;
+          var dataurl;
+              for (var key in ret){
+                  if (key == 'bg') {
+                    dataurl = ret['bg'];
+                  }
+                  else if (key == 'dg') {
+                    dataurl = ret['dg'];
+                  }
+              }
+             // var tmp_key = rey.key
+             // var dataurl = ret['bg']; 
+              var len = dataurl.length-3
+              dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+            
+              var image = new Image();
+              image.setAttribute("src",dataurl)
+              image.onload = function(){
+                    context_result.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight);
+                    $('#canvas_result').css({"visibility":"visible","z-index":"20"});  
+              }
+              $('#canvas').css("pointer-events","none")
+              //设置前景
+              for(var i=1; i<Layer_orders.length; i++)
+              {
+                 console.log('draw',Layer_orders[i])
+                 let tmp_name = Layer_orders[i]; 
+                 $("#"+tmp_name).css('pointer-events','none')
+                 var dataurl = ret[Layer_orders[i]]; 
+                 var len = dataurl.length-3
+                 dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+            
+
+                 let add_canvas = document.createElement("canvas");
+                 add_canvas.width = Role_canvasWidth;
+                 add_canvas.height = Role_canvasHeight;
+                 let add_context = add_canvas.getContext('2d');
+                 let add_canvas_name = 'result_'+tmp_name;
+                 add_canvas.setAttribute("id", add_canvas_name);
+
+                 let z_index = (20+2*i).toString(); 
+                 let z_index_scale = (20+2*i+1).toString(); 
+                  
+                 add_canvas.classList.add("result_Role_canvas");
+
+
+
+                 var canvas_container = document.getElementById("canvas_container");
+                 canvas_container.append(add_canvas);
+
+                 let top = $("#"+tmp_name).css("top");
+                 let top_scale = (parseInt(top)+236).toString()+'px'; 
+                 top = parseInt(top).toString()+'px'
+                 let left = $("#"+tmp_name).css("left");
+                 let left_scale = (parseInt(left)+237).toString()+'px'; 
+                 left = parseInt(left).toString()+'px'
+                 $('#'+add_canvas_name).css({'z-index':z_index,'border':"none","position":"absolute","left":left,"top":top})
+
+
+                 let image = new Image();
+                 image.setAttribute("src",dataurl)
+                 image.onload = function(tmp){
+                                    
+                    add_context.drawImage(image,0,0,image.width,image.height,0,0,Role_canvasWidth,Role_canvasHeight); 
+   
+                 }
+
+
+                 let add_canvas_scale =  document.createElement("div");
+                 add_canvas_scale.setAttribute("id",add_canvas_name+"_scale");
+                 canvas_container.append(add_canvas_scale);
+                 add_canvas_scale.classList.add("add_canvas_scale"); 
+                 $("#"+add_canvas_name+"_scale").css({"width":"25px","height":"25px","position":"absolute"});
+                 $("#"+add_canvas_name+"_scale").css("background-image","url(./static/img/tool/scale.png)");
+                 $("#"+add_canvas_name+"_scale").css("background-size","25px 25px");
+                 $("#"+add_canvas_name+"_scale").css({"left":left_scale,"top":top_scale,"z-index":z_index_scale,"visibility":"hidden"})
+              }
+              $("#canvas_result").unbind(); 
+              $("#canvas_result").bind("click",function(){
+                  console.log("have click canvas_result!!!")
+                  if (Edit_result_Role.length>0)
+                  {
+                         $("#"+Edit_result_Role).css("border","none"); 
+                         $("#"+Edit_result_Role+"_scale").css("visibility","hidden");                         
+                  }
+                  Edit_result_Role=""; 
+              }); 
+              $(".result_Role_canvas").unbind();
+              $(".result_Role_canvas").bind("click",function(){
+                      if (Edit_result_Role.length>0)
+                      {
+                         $("#"+Edit_result_Role).css("border","none"); 
+                         $("#"+Edit_result_Role+"_scale").css("visibility","hidden");                         
+                      }
+                      Edit_result_Role = $(this).attr("id");
+                      $("#"+Edit_result_Role+"_scale").css("visibility","visible");
+                      $(this).css("border","2px solid rgba(122, 100, 78, 100)"); 
+              }); 
+              $(".result_Role_canvas").bind("mousedown",function(e){
+                      var pre_x=e.pageX; 
+                      var pre_y=e.pageY;
+                      var is_drag = true; 
+                      var drag_id = $(this).attr("id"); 
+                      $("#canvas_container").mousemove(function(e){
+                          if (is_drag && drag_id == Edit_result_Role){
+                             var now_x =e.pageX; 
+                             var now_y =e.pageY; 
+                             var mov_t = now_y-pre_y; 
+                             var mov_l = now_x-pre_x; 
+
+                             let role_top = $("#"+drag_id).css("top");
+                             let role_left = $("#"+drag_id).css("left"); 
+                             role_top = parseInt(role_top)+mov_t; 
+                             role_left = parseInt(role_left)+mov_l; 
+                             $("#"+drag_id).css("top",role_top); 
+                             $("#"+drag_id).css("left",role_left); 
+
+                             role_top = $("#"+drag_id+"_scale").css("top");
+                             role_left = $("#"+drag_id+"_scale").css("left"); 
+                             role_top = parseInt(role_top)+mov_t; 
+                             role_left = parseInt(role_left)+mov_l; 
+                             $("#"+drag_id+"_scale").css("top",role_top); 
+                             $("#"+drag_id+"_scale").css("left",role_left); 
+                             pre_x = now_x; 
+                             pre_y = now_y; 
+                          }
+                      }).mouseup(function(){
+
+                           is_drag = false; 
+                      }); 
+              });
+
+              $('.add_canvas_scale').css("visibility","hidden"); 
+              $(".add_canvas_scale").unbind(); 
+              
+              $(".add_canvas_scale").bind("mousedown",function(e){
+                  let canvas_name = $(this).attr("id").slice(0,-6); 
+                  var is_scale = true; 
+                  var pre_x = e.pageX; 
+                  var pre_y = e.pageY; 
+                  console.log("doit once!!!!"); 
+                   //获取画布的宽和高
+                  var edit_canvas = document.getElementById(canvas_name);
+                  $("#canvas_container").mousemove(function(e){
+                     if (is_scale)
+                     {
+                      var now_x = e.pageX; 
+                      var now_y = e.pageY; 
+                      var mov_t = now_y-pre_y; 
+                      var mov_l = now_x-pre_x; 
+
+                      var width=edit_canvas.getAttribute("width")
+                      var height=edit_canvas.getAttribute("height");
+                      //获取画布的图像信息,一个副本
+                      var content=edit_canvas.getContext("2d")
+                      console.log("here!!!!!!",canvas_name.slice(7)); 
+                      var dataurl = ret[canvas_name.slice(7)]; 
+                      var len = dataurl.length-3
+                      dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+
+                      if (true){
+                          let scale_top = $("#"+canvas_name+"_scale").css("top"); 
+                          scale_top = parseInt(scale_top)+mov_t;
+                          let scale_left = $("#"+canvas_name+"_scale").css("left"); 
+                          scale_left = parseInt(scale_left)+mov_l;
+                          $("#"+canvas_name+"_scale").css("top",scale_top); 
+                          $("#"+canvas_name+"_scale").css("left",scale_left); 
+
+                          //重新设置画布的大小
+                          width=parseInt(width)+mov_l;
+                          height=parseInt(height)+mov_t; 
+                          edit_canvas.setAttribute("width",width)
+                          edit_canvas.setAttribute("height",height)
+                          content.clearRect(0,0,width,height);
+                          //将获得的图像副本,重新绘制到画布,完成画布的大小改变
+                          let image = new Image(); 
+                          image.src = dataurl; 
+                          image.onload = function(){
+                                  content.drawImage(image,0,0,image.width,image.height,0,0,width,height); 
+                          }
+
+                          pre_x = now_x;
+                          pre_y = now_y; 
+                      }else 
+                      {
+                         is_scale =false; 
+                      }
+                     }
+
+                  }).mouseup(function(){
+                    is_scale = false; 
+                  }); 
+                  $(document).bind('mouseup',function(){
+                      is_scale = false; 
+                  }); 
+                      
+              });
+              
+
+              //alert("Successful!"); 
+              $('.loading').css('visibility','hidden'); 
+              $('.mask').css('visibility','hidden');
+              $('.sketch-mode').css('pointer-events','auto');
+              $('.AI-generate').css('pointer-events','auto');
+              $('.random-set').css('pointer-events','auto');
+              
+        }
+        });
+ 
+      }else 
+      {
+        $("#canvas_result").css("visibility","visible"); 
+        console.log("generate-mode");
+              $('.sketch-mode').css('pointer-events','auto');
+              $('.AI-generate').css('pointer-events','auto');
+              $('.random-set').css('pointer-events','auto');
+        /*
+
+        for(var i=1; i<Layer_orders.length; i++){
+                 console.log('draw',Layer_orders[i])
+                 let tmp_name = Layer_orders[i]; 
+                 $("#result_"+tmp_name).remove()
+                 $("#"+tmp_name).css('pointer-events','auto')
+        }
+        $('#canvas').css("pointer-events","auto")
+        $(".result_Role_canvas").remove();
+        $(".add_canvas_scale").remove(); 
+        */
+      }
+      Display_result = true; 
+      $('.sketch-mode').text("返回绘制");
+      $('.random-set').text('打印')
+      $('.AI-generate').text("下载");
+
+      
+  }); 
+
+  $(".sketch-mode").click(function(){
+     if (Display_result==false)
+     {
+        clearContext();
+        ResetScene('clear')
+     }else 
+     {
+           $("#canvas_result").css("visibility","hidden"); 
+           $('.sketch-mode').text("清除所有");
+           $('.AI-generate').text("AI生成");
+           $('.random-set').text("推荐预设");
+           $('#canvas').css("pointer-events","auto")
+           $('Button').css('pointer-events','auto');
+           Display_result = false; 
+           if (Scene.tool=='size')
+           {
+             $('.iconhuabi').css('color','#0AC0C5');
+           }else 
+           {
+            $('.iconxiangpi').css('color','#0AC0C5');
+           }
+           /*
+           clearContext();
+           console.log("sketch-mode"); 
+           for(var i=1; i<Layer_orders.length; i++){
+                       console.log('draw',Layer_orders[i])
+                       let tmp_name = Layer_orders[i]; 
+                       $("#result_"+tmp_name).remove()
+                       $("#"+tmp_name).css('pointer-events','auto')
+            }
+            $('#canvas').css("pointer-events","auto")
+            $(".result_Role_canvas").remove();
+            $(".add_canvas_scale").remove(); */
+      }
+  }); 
+
+  var close_8_flag; 
+  function change_close_8(){
+    if (Detect_change){
+      console.log("canvas.html"/*tpa=http://painting.nhcilab.com/canvas.html*/,"change")
+      clearInterval(close_8_flag)
+      just_one = true
+      ////////////// LOAD DG CONTENT //////////////
+      var  fd = new FormData();
+      var data = canvas.toDataURL();
+      data = data.substr(22); 
+      if(Scene.way == 'upload' && Scene.upload_type=='Picture')
+      {
+        fd.append('bg',data); 
+        console.log("upload_background")
+      }
+      else if(Scene.way == 'draw' || (Scene.way=='upload' && Scene.upload_type=='Label'))
+      {
+        fd.append('change_close_8', data);
+      }
+      //fd.append('bg',data); 
+
+      Caculate_Order(); 
+      for (var i=0; i<Role_List.length; i++)
+      {
+        var da = Role_List[i].Role_canvas.toDataURL(); 
+        da = da.substr(22); 
+        fd.append(Role_List[i].canvas_name,da)
+      }
+
+      $.ajax( {
+        type:"POST", 
+        url:"/ajax_dict", 
+        data:fd,
+        dataType:"json",
+        contentType:false,
+        processData:false,
+        success:function(ret) {
+          console.log("update change_close_8 here!")
+          for (var i=0; i<8; i++)
+          {
+            var key_tmp = 'change_close_8_'+i.toString(); 
+            var dataurl = ret[key_tmp]
+            var len = dataurl.length-3
+            dataurl = "data:image/png;base64," + dataurl.substr(2,len)
+            $("#drawing_page"+(i+1).toString()).attr('src',dataurl)
+            
+          }
+        }
+      })
+      Detect_change = false; 
+      close_8_flag = setInterval(change_close_8,500)
+    }else 
+    {
+      console.log("canvas.html"/*tpa=http://painting.nhcilab.com/canvas.html*/,"no-change")
+    }
+  }
+
+  //close_8_flag = setInterval(change_close_8,500); //control closed 8 images displaying
+</script>
+
+
+
+<script>
+  function openRightMenu() {
+    document.getElementById("rightMenu").style.display = "block";
+    $("#openRightMenu").css("display","none"); 
+    $("#Rightlayer").css("display","none"); 
+  }
+  function closeRightMenu() {
+    document.getElementById("rightMenu").style.display = "none";
+    $("#openRightMenu").css("display","block")
+    $("#Rightlayer").css("display","block");
+  }
+</script>
+
+
+<!--new generation js-->
+<script type="text/javascript">
+
+//画笔工具栏与橡皮擦工具栏
+var eleeraser = document.getElementById("eraser");
+var elebrush = document.getElementById("brush");
+function displayBrush()
+{
+  if (Display_result==true) return; 
+  Scene.tool = 'size'
+  $('.iconhuabi').css('color','#0A0A0D')
+  $('.iconxiangpi').css('color',color_tool)
+  if(elebrush.style.display=="none"){
+   elebrush.style.display="block";
+   eleeraser.style.display="none";
+  }
+  else{
+    elebrush.style.display="none";
+  }
+}
+var color_tool = $('.iconxiangpi').css('color')
+
+function displayEraser()
+{
+  if (Display_result==false)
+  {
+      Scene.tool = 'eraser'
+      $('.iconhuabi').css('color',color_tool)
+      $('.iconxiangpi').css('color','#0A0A0D')
+      if(eleeraser.style.display=="none"){
+       eleeraser.style.display="block";
+       elebrush.style.display="none";
+      }
+      else{
+        eleeraser.style.display="none";
+      }
+  } 
+}
+function openRightMenu(){
+    document.getElementById("rightMenu").style.display = "block";
+    $("#openRightMenu").css("display","none"); 
+    $("#Rightlayer").css("display","none"); 
+}
+function closeRightMenu() {
+    document.getElementById("rightMenu").style.display = "none";
+        $("#openRightMenu").css("display","block")
+    $("#Rightlayer").css("display","block");
+}
+</script>
+
+ 
+
+
+<script type="text/javascript">
+
+
+//添加角色画布
+var Create_Role = function (grah, isdrag, path) {
+  $(".canvas_mov").unbind();
+  var canvas_container = document.getElementById("canvas_container");
+
+
+  //添加画布
+  var Role_canvas = document.createElement("canvas");
+  Role_canvas.width = Role_canvasWidth;
+  Role_canvas.height = Role_canvasHeight;
+  var Role_context = Role_canvas.getContext('2d');
+  total_create += 1;
+  var canvas_name = grah + (total_create).toString();
+
+  //命名
+  console.log("new-canvas-name", canvas_name);
+  Role_canvas.setAttribute("id", canvas_name);
+
+
+  //创建一个角色
+  var Single_Role = new Object();
+  Single_Role.canvas_name = canvas_name;
+  Single_Role.cancelIndex = 0;
+  Single_Role.cancelList = new Array();
+  Single_Role.Role_canvas = Role_canvas;
+  Single_Role.Role_context = Role_context;
+  Role_List.push(Single_Role);
+  if (Role_List.length>1) Turn_Role(current_Role, "hidden");
+  current_Role = canvas_name;
+  Role_canvas.classList.add("Role_canvas");
+  Role_context.fillStyle ='rgba(255, 255, 255, 0)';
+  canvas_container.append(Role_canvas);
+
+
+
+  //添加RightMenu的显示图
+  var role_div = document.createElement("div");
+  role_div.classList.add("w3-bar-item");
+  role_div.setAttribute("id", canvas_name+"_div");
+  role_div.classList.add("w3-button");
+  var rightMenu = document.getElementById("rightMenu");
+  rightMenu.append(role_div);
+  var role_show = document.createElement("img");
+
+
+  //添加显示图片
+  role_show.setAttribute("id", canvas_name+"_show");
+  role_show.classList.add("role_show");
+  role_div.append(role_show);
+  clearContext();
+  $(".role_show").unbind();
+
+  $(".role_show").bind("click", function() {
+    if(pattern == "Role") {
+      Turn_Role(current_Role, "hidden");
+      current_Role = $(this).attr("id").slice(0, -5);
+      Turn_Role(current_Role, "display");
+      Caculate_Cover();
+    }
+
+    else if (pattern == "Scene") {
+      current_Role = $(this).attr("id").slice(0, -5);
+      Going_To_Role();
+    }
+  });
+  var is_move_div = false;
+
+
+  //绑定图层菜单
+  $(".w3-button").unbind();
+  bind_div_menu(is_move_div);
+  var trash = document.createElement("a");
+
+
+  //添加垃圾桶
+  trash.setAttribute("id", canvas_name+"_trash");
+  trash.classList.add("trash");
+  role_div.append(trash);
+
+
+  //设置垃圾桶事件
+  $(".trash").unbind();
+
+  $(".trash").click(function() {
+    console.log("trash: id", $(this).attr("id").slice(0, -6));
+    Role_del($(this).attr("id").slice(0, -6));
+  });
+  Caculate_Order();
+  $("#"+canvas_name+"_div").insertBefore("#"+Layer_orders[Layer_orders.length-1]+"_div");
+
+
+  //插入这个div
+  Layer_orders.push(canvas_name);
+
+
+  //添加拖动指针
+  var canvas_mov = document.createElement("div");
+  canvas_mov.classList.add("canvas_mov");
+  canvas_mov.setAttribute("id", canvas_name+"_mov");
+  canvas_container.append(canvas_mov);
+  $("."+Role.grah).click();
+  Caculate_Cover();
+
+  //实现拖动功能
+  $(".canvas_mov").mousedown(function(e) {
+    var pre_x = e.pageX;
+    var pre_y = e.pageY;
+    var ismove = true;
+    var mov_id = $(this).attr("id").slice(0, -4);
+    console.log("The canvas is moving :", mov_id);
+
+    $("#canvas_container").mousemove(function(e) {
+      if (ismove) {
+        var now_x = e.pageX;
+        var now_y = e.pageY;
+        var mov_t = now_y-pre_y;
+        var mov_l = now_x-pre_x;
+        //移动角色画布
+        var top = $("#"+mov_id).css("top");
+        top = parseInt(top)
+        var mov_top = top+mov_t;
+        var left = $("#"+mov_id).css("left");
+        left = parseInt(left)
+        var mov_left = left+mov_l;
+
+        //判断是否移出总画布外
+        if(mov_top>256 || mov_top<0 || mov_left<0 || mov_left>768) {
+          ismove =false;
+          mov_top = Math.min(256, mov_top);
+          mov_top = Math.max(mov_top, 0);
+          mov_left = Math.max(mov_left, 0);
+          mov_left = Math.min(mov_left, 768);
+          mov_t = mov_top - top;
+          mov_l = mov_left - left;
+        }
+
+        $("#"+mov_id).css("left", mov_left);
+        $("#"+mov_id).css("top", mov_top);
+        //移动光标
+        top = $("#"+mov_id+"_mov").css("top");
+        top = parseInt(top)
+        mov_top = top+mov_t;
+        left = $("#"+mov_id+"_mov").css("left");
+        left = parseInt(left)
+        mov_left = left+mov_l;
+        $("#"+mov_id+"_mov").css("left", mov_left);
+        $("#"+mov_id+"_mov").css("top", mov_top);
+        pre_x = now_x;
+        pre_y = now_y;
+        Caculate_Cover();
+      }
+
+    }).mouseup(function() {
+      ismove = false;
+    });
+  });
+
+  //如果是拖拽进来的添加图片
+  if (isdrag==true){
+      var image = new Image();
+      console.log("drag_path",path); 
+      image.setAttribute('crossOrigin', 'anonymous');
+      //image.crossOrigin = "anonymous";
+      //path = "./img/tool/bird.png"
+      image.src = path;
+      image.onload = function(){
+        var label = Find_Canvas(); 
+        Role_List[label].Role_context.clearRect(0,0,Role_canvasWidth,Role_canvasHeight); 
+        Role_List[label].Role_context.drawImage(image,0,0,image.width,image.height,0,0,Role_canvasWidth,Role_canvasHeight); 
+        Role_List[label].cancelIndex = 0;
+        var dataUrl =  Role_canvas.toDataURL();
+        Role_List[label].cancelList.push(dataUrl); 
+        update_RightMenu(label); 
+      }
+      
+  }
+  Caculate_Order();
+}
+document.addEventListener('gesturestart', function (event) {
+  event.preventDefault();
+});
+document.body.addEventListener('touchmove', function (e) {
+    console.log(e.target.id !== 'Add_drawing-line-width');
+    if(e.target.id == 'Add_drawing-line-width' || e.target.id == 'Add_eraser-width'){
+      
+    }else{
+      e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+    }
+}, {passive: false})
+
+</script>
+</body></html>

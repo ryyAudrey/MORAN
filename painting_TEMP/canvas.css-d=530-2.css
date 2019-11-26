@@ -1,0 +1,1263 @@
+html {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+body {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+	background: url("TB1xMCucoGF3KVjSZFvXXb_nXXa-4000-2250.jpg")/*tpa=http://img.alicdn.com/tfs/TB1xMCucoGF3KVjSZFvXXb_nXXa-4000-2250.jpg*/;
+	background-position: center;
+	background-size:cover;
+	display: flex;
+    align-items: center;
+}
+.box{
+	width: 1200px;
+	height: 680px;
+	margin: 0 auto;
+	background-color: rgba(242, 242, 242, 1);
+	box-shadow: 0 3px 60px 0 rgba(0,0,0,0.6);
+    border-radius: 5px;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+}
+a,a:hover{
+	text-decoration: none;
+}
+.our-content-plus{
+	width: 100%;
+	/* height: 845px; */
+	margin: 0 auto;
+	padding: 0px;
+	-webkit-overflow-scrolling: touch;
+}
+.our-content{
+	background-color: rgba(242, 242, 242, 1);
+	width: 1320px;
+	height: 845px;
+	float: left;
+}
+.floor-floor{
+	background-color: #FFF;
+	float: right;
+	width: 25px;
+	height: 845px;
+}
+.w3-teal{
+	float: right;
+	right: -1px; 
+}
+
+/*==========================================工具栏======================================*/
+#mytool-nav{
+	background-color: rgba(242, 242, 242, 1);
+}
+#mytool-nav .navbar-collapse{
+	padding: 0px;
+	margin: 0px;
+}
+#my-navbar-nav > li > a{
+	padding-top:5px;
+}
+
+#mytool-nav .main-choose {
+	width: 80px;
+}
+
+#mytool-nav .main-choose a{
+	display: inline-block;
+	height: 45px;
+	width: 80px;
+	border: 1px solid rgba(255, 255, 255, 0);
+}
+#mytool-nav .main-choose a:hover{
+	display: inline-block;
+	height: 45px;
+	width: 80px;
+	background-color: #FFF;
+}
+#bg  .select a{
+	background-color: #FFF;
+}
+.save{
+	padding-left: 15px;
+}
+.save a{
+	display: inline-block;
+	height: 45px;
+	width: 40px;
+}
+.generate-jpg a{
+	display: inline-block;
+	height: 45px;
+	width: 40px;
+}
+.last a{
+	display: inline-block;
+	height: 45px;
+	width: 40px;
+}
+.next a{
+	display: inline-block;
+	height: 45px;
+	width: 40px;
+}
+
+#myTabContent{
+	width: 240px;
+}
+
+/*==========================================环境-绘制轮廓======================================*/
+#background{
+	width: 240px;
+	height: 800px;
+	background-color: #FFF;
+}
+.background-edge-package{
+	padding-top: 10px;
+}
+
+.choose-draw-or-upload {
+	margin-left: 10px;
+}
+.choose-draw-or-upload li{
+	width: 70px;
+	height: 30px;
+	background-color: #FFF;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid rgba(255, 255, 255, 0);
+	float: left;
+	list-style: none;
+}
+.choose-draw-or-upload li a{
+	width: 70px;
+	height: 30px;
+	display: block;
+	background-color: #FFF;
+	color: #000;
+	text-decoration: none;
+	vertical-align: middle;
+	font-size: 12px;
+	padding-top: 8px;
+}
+.choose-draw-or-upload li a:active{
+	display: block;
+	background-color: rgba(242, 242, 242, 1);
+}
+
+
+#background-draw-edge{
+	height: 300px;
+	width: 220px;
+	background-color: rgba(242, 242, 242, 1);
+	margin-left: 10px;
+	margin-top: 30px;
+	padding: 0px;
+}
+
+#upload-img{
+	height: 300px;
+	width: 220px;
+	background-color: rgba(242, 242, 242, 1);
+	margin-left: 10px;
+	margin-top: 30px;
+	padding: 10px;
+}
+
+#upload-img p{
+	width: 160px; 
+	margin:0px;
+	display: inline;
+}
+
+#upload-img a{
+	color:#FF8C00;
+}
+
+.background-edge-tool-row{
+	float: left;
+	list-style: none;
+	height: 70px;
+	padding: 0px;
+	margin: 0px;
+}
+.row1{
+	margin-top: 10px;
+}
+.background-edge-tool-row li{
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	margin: 0px;
+	padding: 0px;
+	border:0px;
+}
+.background-edge-tool-row li a{
+	display: block;
+	width: 65px;
+	height: 65px;
+}
+.background-edge-tool-row li a:hover{
+	display: block;
+	width: 65px;
+	height: 65px;
+}
+.background-edge-tool-row li a:active{
+	display: block;
+	width: 65px;
+	height:65px;
+}
+#mountain{
+	background-image: url("mountain.png")/*tpa=http://painting.nhcilab.com/static/img/tool/mountain.png*/;
+}
+#grass{
+	background-image: url("grass.png")/*tpa=http://painting.nhcilab.com/static/img/tool/grass.png*/;
+}
+#tree{
+	background-image: url("tree.png")/*tpa=http://painting.nhcilab.com/static/img/tool/tree.png*/;
+}
+
+
+.size{
+	background: url("pen.png")/*tpa=http://painting.nhcilab.com/static/img/tool/pen.png*/ no-repeat;
+}
+.size:hover{
+	border: 1px solid rgba(122, 100, 78, 100);
+}
+.eraser{
+	background: url("eraser.png")/*tpa=http://painting.nhcilab.com/static/img/tool/eraser.png*/ no-repeat;
+}
+.eraser:hover{
+	border: 1px solid rgba(122, 100, 78, 100);
+}
+.size-adjust{
+	width: 160px;
+	height: 30px;
+	float: left;
+	margin: 0px 10px;
+	padding-top: 5px;
+}
+
+
+.clear-floor{
+	margin-top: 20px;
+	width: 220px;
+	height: 40px;
+	margin-left: 10px;
+}
+.clear-floor-logo{
+	list-style: none;
+	width: 30px;
+	height: 30px;
+	margin-left: 10px;
+	float: left;
+}
+.clear-this-floor{
+	display: block;
+	background: url("clear.png")/*tpa=http://painting.nhcilab.com/static/img/tool/clear.png*/ no-repeat;
+    width: 30px;
+	height: 30px;
+	
+}
+.clear-this-floor:hover{
+	display: block;
+	background: url("clear-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/clear-1.png*/ no-repeat;
+    width: 30px;
+	height: 30px;
+	
+}
+.clear-floor p{
+	float: left;
+	font-size: 12px;
+	margin-top: 3px;
+}
+.button-choose{
+	width: 220px;
+	height: 50px;
+	margin-left: 10px;
+	padding-left: 10px;
+}
+.button-choose button{
+	width: 80px;
+	height: 30px;
+	-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;
+}
+.button-choose button:active{
+	width: 80px;
+	height: 30px;
+	-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;
+	background-color: #7b644c;
+	color: #FFF;
+	border:none;
+}
+
+
+
+
+
+/*==========================================角色-轮廓库======================================*/
+#object{
+	width: 240px;
+	height: 800px;
+	background-color: #FFF;
+}
+.object-edge-package{
+	padding-top: 5px;
+	background-color: #FFF;
+}
+.object-edge-package p{
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+}
+.object-edge-package-tool{
+	height: 300px;
+	width: 220px;
+	background-color: rgba(242, 242, 242, 1);
+	margin: 0 10px;
+}
+.object-edge-tool-row{
+	margin-bottom: 0px;
+}
+.object-edge-tool-row1{
+	margin-top: 5px;
+}
+.object-edge-tool-row li{
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	margin: 0px;
+	padding: 0px;
+	border:0px;
+}
+.object-edge-tool-row li a{
+	display: block;
+	width: 65px;
+	height: 65px;
+}
+
+.object-edge-tool-row li a:active{
+	display: block;
+	width: 65px;
+	height: 65px;
+	border: 1px solid rgba(122, 100, 78, 100);
+}
+.cat{
+	background-image: url("cat.png")/*tpa=http://painting.nhcilab.com/static/img/tool/cat.png*/;
+}
+ 
+.bird{
+	background-image: url("bird-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/bird.png*/;
+}
+
+
+.plant{
+	background-image: url("plant.png")/*tpa=http://painting.nhcilab.com/static/img/tool/plant.png*/;
+}
+
+
+.other-object{
+	background-image: url("dog.png")/*tpa=http://painting.nhcilab.com/static/img/tool/dog.png*/;
+}
+
+.pen-eraser-size{
+	height: 30px;
+}
+.pen-eraser-size li {
+	width: 30px !important;
+	height: 30px !important;
+	float: left;
+	margin-left: 10px;
+}
+.pen-eraser-size li a{
+	width: 30px !important;
+	height: 30px !important;
+}
+.pen-eraser-size li a:hover{
+	width: 30px;
+	height: 30px;
+}
+
+
+.new-floor{
+	width: 220px;
+	height: 40px;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+.new-floor p{
+	float: left;
+}
+
+.new-floor-logo{
+	list-style: none;
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.new-this-floor{
+	display: block;
+	background: url("new-floor.png")/*tpa=http://painting.nhcilab.com/static/img/tool/new-floor.png*/ no-repeat;
+    width: 30px;
+	height: 30px;	
+} 
+.new-this-floor:hover{
+	background: url("new-floor-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/new-floor-1.png*/ no-repeat;
+} 
+
+.clear-floor-object{
+	width: 220px;
+	height: 40px;
+	float: left;
+	margin-left: 10px;
+}
+.clear-floor-object-logo{
+	list-style: none;
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-left: 10px;
+}
+.clear-this-floor-object{
+	display: block;
+	background: url("clear.png")/*tpa=http://painting.nhcilab.com/static/img/tool/clear.png*/ no-repeat;
+    width: 30px;
+	height: 30px;
+	
+}
+.clear-this-floor-object:hover{
+	display: block;
+	background: url("clear-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/clear-1.png*/ no-repeat;
+    width: 30px;
+	height: 30px;
+	
+}
+.clear-floor-object p{
+	float: left;
+	font-size: 12px;
+	margin-top: 3px;
+}
+
+.edge-choose-package{
+	height:70px;
+	width: 100%;
+	float: left;
+	margin: 10px 0px;
+	padding:0px;
+}
+.edge-choose-package p{
+	font-size: 12px;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+}
+.edge-choose-package ul{
+	float: left;
+	height: 20px;
+	width: 200px;
+}
+.edge-choose-package ul li{
+	display: block;
+	float: left;
+	height: 37px;
+	width: 37px;
+	border: 1px solid rgba(122, 100, 78, 100);
+	margin: 0px 2.5px;
+}
+.left-choose{
+	position: absolute;
+	float: left;
+	display: inline-block;
+	height: 12px;
+	width: 12px;
+	background-image: url("left-choose.png")/*tpa=http://painting.nhcilab.com/static/img/tool/left-choose.png*/;
+	background-size: 12px 12px; 
+	top:40px; 
+	left: 0px; 
+}
+.left-choose:hover{
+	background-image: url("left-choose-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/left-choose-1.png*/;
+}
+.right-choose{
+	position:absolute;
+	display: inline-block;
+	height: 12px;
+	width: 12px;
+	background-image: url("right-choose.png")/*tpa=http://painting.nhcilab.com/static/img/tool/right-choose.png*/;
+	background-size: 12px 12px; 
+	top:40px; 
+	right: 1px; 
+	
+}
+.right-choose:hover{
+	background-image: url("right-choose-1.png")/*tpa=http://painting.nhcilab.com/static/img/tool/right-choose-1.png*/;
+}
+
+#Role-carousel-inner .four_item{
+	height: 60px; 
+	width: 100%; 
+	margin-top:7px;
+	margin-left: 2px; 
+	background-color: transparent; 
+}
+
+#Role-carousel-inner .four_item .pic img{
+	height: 46px; 
+	width: 46px;
+	border: 1px solid rgba(122, 100, 78, 100);    
+	z-index:2;
+
+}
+
+#Role-carousel-inner{
+	margin:0px 10px;
+	width: 200px;  
+}
+
+.ui-clone{
+	height: 46px; 
+	width: 46px;
+	border: 1px solid rgba(122, 100, 78, 100);    
+	z-index:2;
+}
+
+
+
+
+/*==========================================涂鸦======================================*/
+
+#add{
+	width: 240px;
+	height: 800px;
+	background-color: #FFF;
+}
+
+.add-edge-package-tool{
+	height: 300px;
+	width: 220px;
+	background-color: rgba(242, 242, 242, 1);
+	margin: 0 10px;
+}
+.add-edge-tool-row{
+	margin-bottom: 0px;
+	margin-left: 5px; 
+}
+.add-edge-tool-row1{
+	margin-top: 15px;
+	padding-top: 10px;
+}
+
+.add-edge-tool-row li{
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	margin: 0px;
+	padding: 0px;
+	border:0px;
+}
+.add-edge-tool-row li a{
+	display: block;
+	width: 65px;
+	height: 65px;
+}
+
+.add-edge-tool-row li a:active{
+	display: block;
+	width: 65px;
+	height: 65px;
+	border: 1px solid rgba(122, 100, 78, 100);
+}
+
+.color-choose{
+	display: block;
+	width: 100%; 
+	height: 160px; 
+	margin-top: 30px; 
+}
+.color-row{
+	display: block;
+	width: auto;  
+	margin: 5px 10px;  
+	height: 40px; 
+}
+.one-color{
+	display: inline-block;
+	width: 20px; 
+	height: 20px; 
+	background-color: #111; 
+	margin: 10px 13px; 
+}
+.color-1{
+	background-color: #656D78;  
+	border: 1px solid #434A54; 
+	box-shadow: #656D78 0px 0px 10px 2px ; 
+}
+.color-2{
+	background-color: #CCD1D9;
+	border: 1px solid #AAB2BD; 
+}
+.color-3{
+	background-color: #F5F7FA;
+	border: 1px solid #E6E9ED; 
+}
+.color-4{
+	background-color: #EC87C0;
+	border: 1px solid #D770AD; 
+}
+.color-5{
+	background-color: #AC92EC;
+	border: 1px solid #967ADC;   
+}
+.color-6{
+	background-color: #5D9CEC;
+	border: 1px solid #4A89DC; 
+}
+.color-7{
+	background-color: #4FC1E9;
+	border: 1px solid #3BAFDA; 
+}
+.color-8{
+	background-color: #48CFAD; 
+	border: 1px solid #37BC9B; 
+}
+.color-9{
+	background-color: #A0D468;  
+	border: 1px solid #8CC152; 
+}
+.color-10{
+	background-color: #FFCE54;
+	border: 1px solid #F6BB42; 
+}
+.color-11{
+	background-color: #FC6E51;
+	border: 1px solid #E9573F; 
+}
+.color-12{
+	background-color: #ED5565; 
+	border: 1px solid #DA4453; 
+}
+.pen-color{
+	height: 200px; 
+	margin: 20px 8px;
+	display: block; 
+	position: relative;
+}
+#color-note{
+	position: absolute;
+	left: 50px; 
+	top:0px;
+	margin-top:4px; 
+	font-size: 12px;  
+}
+
+
+/*==========================================画布======================================*/
+/* .canvas_container{
+	position: relative;
+	margin-left: 265px;
+	width: 1024px;
+	height: 512px;
+	background-color:#FFF;
+	overflow: hidden;
+} */
+
+.Scent_canvas{   
+	position: absolute;
+	z-index : 0;
+	left:0px;
+	top:0px;
+	width: 920px;
+	height: 460px;
+	cursor: url("cursor.gif")/*tpa=http://painting.nhcilab.com/static/img/tool/cursor.gif*/ 2 2,crosshair;
+} 
+
+.canvas_cover{   
+	position: absolute;
+	z-index : 3;
+	left:0px;
+	top:0px;
+	width: 920px;
+	height: 512px;
+	background: rgba(0,0,0,0.25);
+	pointer-events:none;
+	visibility: hidden;
+} 
+
+.canvas_result{
+	position: absolute;
+	
+	z-index: 10 !important; 
+	/* left: 0px; 
+	top: 0px; */
+	width: 920px; 
+	height: 460px; 
+	
+	visibility: hidden;
+}
+
+.canvas_add{
+	position: absolute;
+	z-index: 70 !important; 
+	left: 0px; 
+	top: 0px;
+	width: 920px; 
+	height: 460px; 
+	visibility: hidden;
+}
+
+.canvas_clip{
+	position: absolute;
+	z-index: 50 !important; 
+	/* left: 0px; 
+	top: 0px; */
+	width: 920px; 
+	height: 460px; 
+	visibility: hidden;
+}
+
+.Role_canvas{
+	position: absolute;
+	z-index : 1;
+	left:384px;
+	top:128px;
+	width: 256px;
+	height: 256px;
+	
+	cursor: url("cursor.gif")/*tpa=http://painting.nhcilab.com/static/img/tool/cursor.gif*/ 2 2,crosshair;
+	border: 2px solid rgba(122, 100, 78, 100);
+}
+
+.canvas_mov{
+	position: absolute; 
+	z-index: 2;
+	left:620px;
+	top:118px;
+	width:20px;
+	height: 40px; 
+	background-image: url("move.png")/*tpa=http://painting.nhcilab.com/static/img/tool/move.png*/;
+}
+
+
+
+
+/*==========================================画布======================================*/
+.list-pic-package{
+	width: 1064px;
+	height: 140px;
+	margin-left: 245px;
+	margin-top: 28px;
+}
+.list-pic{
+	width: 1024px;
+	height: 140px;
+	background:url("roll-film.jpg")/*tpa=http://painting.nhcilab.com/static/img/roll-film.jpg*/ no-repeat;	
+	opacity: 0.5;
+	float: left;
+	margin: 0px 5px;
+}
+.list-pic li{
+	display: block;
+	float: left;
+	width: 200px;
+	height: 100px;
+	background-color: #FFF;
+	margin: 20px 2px 0px 2.5px;
+}
+.list-pic li img{
+	width: 100%;
+	height: 100%; 
+	background: #FFF; 
+}
+.generate-picbook{
+	float: right;
+	margin-right: 35px;
+	margin-top: 20px;
+	width: 80px;
+	height: 30px;
+}
+.list-left-choose{
+	float: left;
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	background-image: url("left-choose.png")/*tpa=http://painting.nhcilab.com/static/img/tool/left-choose.png*/;
+	margin-top: 60px;
+}
+
+.list-right-choose{
+	float: right;
+	display: inline-block;
+	height: 15px;
+	width: 15px;
+	background-image: url("right-choose.png")/*tpa=http://painting.nhcilab.com/static/img/tool/right-choose.png*/;
+	margin-top: 60px;
+}
+
+#rightMenu{
+	position: relative;
+	right:125px;
+        top:-90px; 
+	width:150px; 
+}
+.layer{
+	position: relative;
+	display: block;
+	width: 100%; 
+	height: 100%; 
+	background-image: url("layer.png")/*tpa=http://painting.nhcilab.com/static/img/tool/layer.png*/;
+	background-repeat:no-repeat;
+	background-size:17px 17px; 	
+}
+.left_button{
+	position: relative;
+	display: block;
+	width: 20px; 
+	height: 20px; 
+	background-repeat:no-repeat;
+	background-size:20px 20px; 
+	margin: -3px 0px 0px 2px; 
+	text-decoration:none;
+}
+.left_button:hover{
+	text-decoration:none;
+	color: #0AC0C5;
+}
+
+#back-list{
+	box-shadow:none; 
+	
+	border-radius:0 0 0 0; 
+	left:-5px; 
+}
+
+.display_near_block{
+	height:60px;
+	width:120px; 
+	margin-bottom:10px; 
+}
+
+
+.display_near_pic{
+	width:120px; 
+	height:60px;
+	top:4.5px;
+	left:14px; 
+	background-color:#fff;
+	position:relative; 
+}
+
+.layers{
+	position: relative;
+	width: 40px; 
+	height: 40px; 
+	padding: 6px; 
+	top:-90px; 
+	border-radius:8px 0px 0px 8px;
+	right:20px;
+	box-shadow:0px 0px 5px 0px #e0dfdf; 
+	background-color:#FFF; 
+}
+
+.menu_title{
+	width: 100%; 
+	height: 40px; 
+	top:5px; 
+	display: block;
+	margin-top: 0px; 
+}
+
+.layer_title{
+	width: 100%; 
+	height: 25px; 
+	top:5px; 
+	display: block;
+}
+
+
+
+.layer_title p{
+	text-align: center; 
+	color:#000;
+}
+
+#bg_show{
+	width: 108px; 
+	height: 54px; 
+	z-index: 0; 
+	display: block;
+	border: 1px solid #AAA; 
+}
+
+.role_show{
+	width: 54px; 
+	height: 54px; 
+	z-index: 0; 
+	display: block;
+	border: 1px solid #AAA; 
+	margin: 0px;
+}
+
+.trash{
+	position: absolute;
+	width:15px; 
+	height: 15px; 
+	z-index:0;
+	display: block; 
+	bottom: 5px; 
+	right:8px; 
+	background-image: url("trash.png")/*tpa=http://painting.nhcilab.com/static/img/tool/trash.png*/;
+	background-size: 15px 15px;
+	background-repeat: no-repeat;
+	visibility: hidden;
+}
+
+.order{
+	position: absolute;
+	width:18px; 
+	height: 18px; 
+	z-index:0;
+	display: block; 
+	top: 3px; 
+	right:6px; 
+	background-image: url("order.png")/*tpa=http://painting.nhcilab.com/static/img/tool/order.png*/;
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	visibility: hidden;
+}
+
+.mov_div{
+	float:left;
+	width:110px;  
+	border:none;
+	display:block;
+	height:2px;
+	margin: 3px 5px; 
+	background-color: #D3D3D3;
+}
+
+
+#sortable li{
+	height: 60px; 
+}
+
+
+
+
+input[type=range]{ 
+		 margin-top: 8px;
+	         outline: none; 
+		 -webkit-appearance: none;/*清除系统默认样式*/  
+		 
+		 background: -webkit-linear-gradient(#2fc0cb, #2fc0cb) no-repeat, #ddd;  
+	         background-size: 50% 100%;/*设置左右宽度比例*/  
+		 height: 1px;/*横条的高度*/  
+} 
+ /*拖动块的样式*/  
+input[type=range]::-webkit-slider-thumb {  
+	 -webkit-appearance: none;/*清除系统默认样式*/  
+	height:16px;/*拖动块高度*/  
+        width: 16px;/*拖动块宽度*/  
+        background: #fff;/*拖动块背景*/  
+	border-radius: 50%; /*外观设置为圆形*/  
+	 border: solid 2px #2fc0cb; /*设置边框*/  
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*==========================================新版======================================*/
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	
+	background-color: #F9F9F9;
+	/* width: 1440px; */
+	/* height: 800px; */
+	margin: auto;
+}
+
+
+/*==========================================导航栏======================================*/
+ #canvas-nav{
+  	background-color: #FFF;
+    height:70px;
+    border: 1px solid #EEEEEE;
+  }
+#canvas-nav-right .navbar-brand button{
+	height: 32px;
+	width: 100px;
+	margin-top: 17px;
+	margin-left: 10px;
+	font-size: 14px;
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+}
+#canvas-nav-right .navbar-brand button:hover{
+	background:  #0AC0C5;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+	color: #FFF;
+}
+#canvas-nav button{
+	display: block;
+	float: left;
+	background: #FFF;
+	margin-top:15px;
+	margin-left: 25px;
+	border:0px;
+	outline: none;
+	color: #9199a5;
+}
+#canvas-nav .have_hover:hover{
+	display: block;
+	float: left;
+	background: #FFF;
+	margin-top:15px;
+	margin-left: 25px;
+	border: 0px;
+	border-color: #FFF;
+	color: #0AC0C5;
+}
+
+
+
+#canvas-nav .spanspan{
+	margin-top: 22px;
+	margin-left: 25px;
+	display: block;
+	float: left;
+	color: #ccc;
+}
+#canvas-nav-right button{
+	height: 32px;
+	width: 100px;
+	margin-top: 17px;
+	margin-left: 10px;
+	font-size: 14px;
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+}
+#canvas-nav-right button:hover{
+	background:  #0AC0C5;
+	border: 1px solid #0AC0C5;
+	border-radius: 3px;
+	color: #FFF;
+}
+.btn-group button{
+	background-color: #FFF;
+	border:none;
+	box-shadow: none;
+}
+html{
+	touch-action: none;
+}
+/*=========================================画笔工具与橡皮工具======================================*/
+.tool{
+	margin: 0 auto;
+	width: 1000px;
+	height: 80px;
+}
+#brush{
+	margin: 0 auto;
+	width: 679px;
+	height: 65px;
+	background-color: #FFF;
+	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.12);
+	border-radius: 16px;
+}
+#brush .iconfont{
+	display: block;
+	font-size: 25px;
+	color: #9199a5;
+	text-align: center;
+	background-color: #FFF;
+	margin: 0px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 0px;
+	text-decoration: none;
+}
+#brush ul{
+    padding-top: 6px;
+}
+
+
+#brush ul li{
+	float: left;
+	font-size: 12px;
+	color: #7D8C8F;
+	display: block;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+#brush .spanspan{
+	margin-top: 18px;
+	margin-left: 20px;
+	margin-right:20px;
+	display: block;
+	float: left;
+	color: #ccc;
+}
+#Add_drawing-line-width{
+	width: 100px;
+	height: 2px;
+	float: left;
+	margin-top:27px;
+}
+#Add_eraser-width{
+	width: 100px;
+	height: 2px;
+	float: left;
+	margin-top:27px;
+}
+.size-text{
+	margin-top:20px;
+	margin-left: 25px;
+}
+.size-text a{
+	color: #7D8C8F;
+}
+
+#eraser{
+    margin-left:335px;
+	width: 280px;
+	height: 65px;
+	background-color: #FFF;
+	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.12);
+	border-radius: 16px;
+}
+#eraser ul{
+	padding-top: 6px;
+}
+#eraser ul li{
+	float: left;
+	font-size: 12px;
+	color: #7D8C8F;
+	display: block;
+	text-align: center;
+}
+
+/*==========================================画布======================================*/
+.our-content-plus{
+	/* width: 1440px; */
+	/* height: 800px; */
+}
+.canvas_container{
+	position: relative;
+	margin: 0 auto;
+	width: 920px;
+	height: 460px;
+	background-color:#FFF;
+	border-radius: 3px;
+	/* margin-left: 208px;
+	margin-top:10px;
+	float: left; */
+}
+canvas{   
+	position: absolute;
+	border-radius: 3px;
+	z-index : 0;
+	/* left:0px;
+	top:0px; */
+	width: 920px;
+	height: 460px;
+	cursor: url("cursor.gif")/*tpa=http://painting.nhcilab.com/static/img/tool/cursor.gif*/ 2 2,crosshair;
+} 
+/*================================================================================*/
+.floor-floor{
+	background-color: #f9f9f9;
+    right: 0px;
+    width: 25px;
+    height: 730px;
+    top: 250px;
+	position: absolute;
+	display: none;
+}
+.w3-teal{
+	float: right;
+}
+
+ 
+.loading{  
+    width:180px;  
+    height:90px;  
+    position: relative;  
+    top:35%;  
+    left:40%;  
+    line-height:56px;  
+    color:#fff;  
+    font-size:15px;  
+    background: rgba(255,255,255,0) url("loading.gif")/*tpa=http://painting.nhcilab.com/static/images/loading.gif*/ no-repeat;  
+    background-size: 180px 90px; 
+    opacity: 0.7;  
+    z-index:9999;    
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20); 
+    visibility: hidden;
+}  
+
+.loading p{
+	position:relative;
+	padding-top: 50px;
+	width:300px; 
+	color:#9199a5;
+	font-size:10px; 
+}
+.mask{
+
+	width: 1200px;
+    height: 680px;
+	margin: 0 auto;
+	visibility: hidden; 
+	position: absolute;
+	background-color:rgba(255,255,255,0.9);
+	z-index: 100;
+	border-radius: 5px; 
+	/* width:100%;
+	height:100%; 
+ 	
+	position: absolute; 
+    left:0; 
+	z-index:150; 
+	visibility: hidden; 
+	top:-10px;  */
+}
+ 
